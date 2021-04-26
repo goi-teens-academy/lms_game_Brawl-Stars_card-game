@@ -2,9 +2,9 @@
 .how-to-play {
   background-color: #d8d8d8;
   border: 1px black solid;
-  max-width: 1235px;
+  max-width: 1200px;
   /* height: 692px; */
-  width: 60vw;
+  width: 70vw;
   text-align: center;
   padding: 0 32px 32px;
   border-radius: 10px;
@@ -50,9 +50,54 @@
   top: 32px;
 }
 @media screen and (max-width: 1500px) {
- .how-to-play__text {
-  font-size: 17px;
-} 
+  .how-to-play__text {
+    font-size: 17px;
+  }
+}
+@media screen and (max-width: 1200px) {
+  .how-to-play__text {
+    font-size: 16px;
+  }
+  .how-to-play {
+    padding: 0 24px 24px;
+    width: 90vw;
+  }
+  .how-to-play__headline {
+    font-size: 38px;
+    margin: 24px auto 16px;
+  }
+
+  .how-to-play__close {
+    right: 20px;
+    top: 16px;
+  }
+  .how-to-play__close > img {
+    width: 60px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .how-to-play__text {
+    font-size: 12px;
+  }
+  .how-to-play {
+    padding: 0 16px 16px;
+  }
+  .how-to-play__headline {
+    font-size: 30px;
+    margin: 16px auto 12px;
+  }
+  .how-to-play__close > img {
+    width: 45px;
+  }
+}
+@media screen and (max-width: 320px) {
+  .how-to-play__photo-wrapper {
+  display: none;
+  
+}
+.how-to-play__wrapper {
+  justify-content: center;
+}
 }
 .modal {
 }
