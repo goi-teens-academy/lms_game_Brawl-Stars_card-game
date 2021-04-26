@@ -3,10 +3,10 @@
   background-color: #d8d8d8;
   border: 1px black solid;
   max-width: 1235px;
-  height: 692px;
+  /* height: 692px; */
   width: 60vw;
   text-align: center;
-  padding: 0 32px;
+  padding: 0 32px 32px;
   border-radius: 10px;
   position: absolute;
   top: 50%;
