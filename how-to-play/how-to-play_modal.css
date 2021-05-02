@@ -8,10 +8,7 @@
   text-align: center;
   padding: 0 32px 32px;
   border-radius: 10px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  
 }
 .how-to-play__headline,
 .how-to-play__text {
@@ -100,4 +97,8 @@
 }
 }
 .modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
