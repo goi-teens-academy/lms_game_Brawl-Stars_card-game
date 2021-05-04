@@ -18,7 +18,7 @@ html{
 }
 .start__open-modal {
   font-weight: 700;
-  font-family: "Open Sans", sans-serif;
+  font-family: var(--main-font);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +33,7 @@ html{
 }
 .start__btn {
   transform: skew(-10deg);
-  background-color: #ecc408;
+  background-color: var(--main-yellow);
   display: block;
   width: 350px;
   height: 144px;
@@ -62,7 +62,7 @@ html{
   cursor: pointer;
   width: 144px;
   height: 144px;
-  background-color: #2900f9;
+  background-color: var(--main-blue);
 }
 .start__logo-wrapper {
   margin-bottom: 133px;
