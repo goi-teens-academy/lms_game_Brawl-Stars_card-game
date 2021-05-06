@@ -1,0 +1,148 @@
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 870px;
+  margin: 10px auto 40px;
+  perspective: 1000px;
+}
+.card {
+  perspective: 1000px;
+  transform-style: flat;
+  margin: 5px;
+  width: 200px;
+  height: 320px;
+  position: relative;
+}
+.card,
+.card__photo,
+.card__back {
+  transition: 400ms linear;
+  border-radius: 11px;
+}
+.card:active {
+  transform: scale(0.95);
+}
+.card__photo,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.card__photo {
+  opacity: 0;
+  transform: rotateY(-180deg);
+}
+.card__back {
+  transform: rotateY(0deg);
+}
+.choosed {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+.flip {
+  transform: rotateY(180deg);
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.hidden-modal {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+.scaled {
+  transform: scale(4);
+}
+.game {
+  position: relative;
+}
+.timer {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+}
+
+.timer__inner {
+  display: inline-block;
+  font-size: 30px;
+}
+.game__player-turn {
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: inline-block;
+  background-color: #fff;
+}
+.settings__type-wrapper {
+  display: flex;
+  align-items: flex-start;
+  width: 700px;
+}
+.settings__type {
+  transition: 200ms linear;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  box-sizing: border-box;
+  width: 33.33333%;
+  height: 50px;
+  border-bottom: 50px solid rgb(44, 80, 241);
+  opacity: 0.6;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+
+.game-type__text {
+  height: 0;
+  display: block;
+  position: relative;
+  z-index: 0;
+  padding-top: 12px;
+  font-size: 20px;
+}
+.settings__type--active {
+  opacity: 1;
+}
+.settings__type--active::before {
+  content: "";
+  top: 45px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background-color: #fff;
+}
+.settings__by-type {
+  /* width: 1000px; */
+  background-color: var(--main-blue);
+  border-radius: 0 0 10px 10px;
+}
+.settings__headline {
+  margin: 0;
+}
+.modal {
+  text-align: center;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game__congratulation {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* opacity: 0.5; */
+  z-index: -1;
+  background-image: url("./img/congratulation.gif");
+}

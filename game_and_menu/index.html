@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./variables.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="shortcut icon"
+      href="https://avatars.githubusercontent.com/u/69747115?v=4"
+      type="image/x-icon" />
+    <title>Сайтік на колінці</title>
+  </head>
+
+  <body>
+    <section class="settings modal">
+      <div class="settings__type-wrapper">
+        <div data-type="singlePlayer" class="settings__type
+          settings__type--active">
+          <span class="game-type__text">Single player</span>
+        </div>
+        <div data-type="multiPlayer" class="settings__type">
+          <span class="game-type__text">Multi player</span>
+        </div>
+        <div data-type="arcade" class="settings__type">
+          <span class="game-type__text">Arcade</span>
+        </div>
+      </div>
+      <div class="settings__by-type settings__singlePlayer">
+        <div class="settings__count-cards">
+          <h2 class="settings__headline">Виберіть кількість карток</h2>
+          <div class="count-cards__wrapper">
+            <button type="button" class="count-btn" data-count="12">12</button><button
+              type="button" class="count-btn"
+              data-count="20">20</button><button type="button" class="count-btn"
+              data-count="32">32</button><button
+              type="button" class="count-btn" data-count="40">40</button>
+          </div>
+        </div>
+        <div class="settings__count-timer">
+          <h2 class="settings__headline">Виберіть кількість часу</h2>
+          <div class="count-timer__wrapper">
+            <button type="button" class="count-timer" data-count="30">
+              0,5 хв</button><button type="button" class="count-timer"
+              data-count="60">
+              1 хв</button><button type="button" class="count-timer"
+              data-count="120">
+              2 хв</button><button type="button" class="count-timer"
+              data-count="180">
+              3 хв
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="settings__by-type settings__multiPlayer hidden-modal">
+        <div class="settings__count-cards">
+          <h2 class="settings__headline">Виберіть кількість карток</h2>
+          <div class="count-cards__wrapper">
+            <button type="button" class="count-btn" data-count="12">12</button><button
+              type="button" class="count-btn"
+              data-count="20">20</button><button type="button" class="count-btn"
+              data-count="32">32</button><button
+              type="button" class="count-btn" data-count="40">40</button>
+          </div>
+        </div>
+        <div class="settings__count-timer">
+          <h2 class="settings__headline">Виберіть кількість гравців</h2>
+          <div class="count-timer__wrapper">
+            <button type="button" class="count-timer" data-count="30">2</button><button
+              type="button" class="count-timer"
+              data-count="60">3</button><button type="button"
+              class="count-timer" data-count="120">
+              4
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="settings__by-type settings__arcade hidden-modal">
+        <div class="settings__count-cards">
+          <h2 class="settings__headline">Виберіть рівень</h2>
+          <div class="arcade__btn-wrapper">
+            <button class="arcade__btn">1</button><button class="arcade__btn">2</button><button
+              class="arcade__btn">3</button><button class="arcade__btn">4</button><button
+              class="arcade__btn">5</button><button
+              class="arcade__btn">6</button><button class="arcade__btn">7</button><button
+              class="arcade__btn">8</button><button
+              class="arcade__btn">9</button><button class="arcade__btn">10</button>
+          </div>
+        </div></div>
+        <button type="button" class="start-btn">Почати</button>
+
+      </section>
+
+      <section class="game">
+        <div class="game__congratulation hidden"></div>
+        <div class="game__player-counter game__player-counter--1"></div>
+        <div class="game__player-counter game__player-counter--2"></div>
+        <div class="game__player-counter game__player-counter--3"></div>
+        <div class="game__player-counter game__player-counter--4"></div>
+        <div class="game__player-turn"></div>
+        <div class="card-container"></div>
+        <div class="timer hidden">
+          <div class="timer__minutes timer__inner">0</div>
+          <span class="timer__inner">:</span>
+          <div class="timer__seconds timer__inner">00</div>
+        </div>
+      </section>
+      <audio src="./music/gameplay.mp3" class="audio__game-play"></audio>
+      <audio src="./music/won_sound.mp3" class="audio__won"></audio>
+      <audio src="./music/lose_sound.mp3" class="audio__lose"></audio>
+
+      <script src="./js/script.js" type="module"></script>
+    </body>
+
+  </html>
