@@ -1,0 +1,239 @@
+.settings {
+  width: 100%;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  max-width: 870px;
+  margin: 10px auto 40px;
+  perspective: 1000px;
+}
+.card {
+  perspective: 1000px;
+  transform-style: flat;
+  margin: 5px;
+  width: 200px;
+  height: 320px;
+  position: relative;
+}
+.card,
+.card__photo,
+.card__back {
+  transition: 400ms linear;
+  border-radius: 11px;
+}
+.card:active {
+  transform: scale(0.95);
+}
+.card__photo,
+.card__back {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.card__photo {
+  opacity: 0;
+  transform: rotateY(-180deg);
+}
+.card__back {
+  transform: rotateY(0deg);
+}
+.choosed {
+  opacity: 1;
+  transform: rotateY(0deg);
+}
+.flip {
+  transform: rotateY(180deg);
+}
+.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+.hidden-modal {
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+  visibility: hidden;
+}
+.scaled {
+  transform: scale(4);
+}
+.game {
+  position: relative;
+}
+.timer {
+  position: absolute;
+  top: 50px;
+  right: 40px;
+}
+
+.timer__inner {
+  display: inline-block;
+  font-size: 30px;
+}
+.game__player-turn {
+  font-size: 60px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  display: inline-block;
+  background-color: #fff;
+}
+.settings__type-wrapper {
+  display: flex;
+  align-items: flex-start;
+}
+.settings__wrapper,
+.settings__type-wrapper {
+  max-width: 700px;
+  margin: 0 auto;
+}
+.settings__type {
+  /* outline: 2px solid #ecc408; */
+  transition: 200ms linear;
+  cursor: pointer;
+  position: relative;
+  top: 2px;
+  box-sizing: border-box;
+  width: 33.33333%;
+  height: 50px;
+  border-bottom: 50px solid rgb(44, 80, 241);
+  opacity: 0.6;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+}
+
+.game-type__text {
+  height: 0;
+  display: block;
+  position: relative;
+  z-index: 0;
+  padding-top: 11px;
+  font-size: 22px;
+  font-family: var(--main-font);
+  font-weight: 600;
+  color: #fff;
+}
+.settings__type--active {
+  opacity: 1;
+}
+.settings__type--active::before {
+  content: "";
+  top: 45px;
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 2px;
+  /* background-color: #fff; */
+  background-color: var(--main-yellow);
+}
+.settings__btn {
+  position: relative;
+  font-family: var(--main-font);
+  border-radius: 10px;
+  font-size: 20px;
+  width: 80px;
+  height: 40px;
+  background-color: var(--main-yellow);
+  color: #000;
+  box-shadow: var(--small-shadow);
+}
+.settings__wrappers {
+  display: flex;
+  margin: 0 auto 35px;
+  width: 70%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.settings__by-type {
+  /* width: 1000px; */
+}
+.settings__headline {
+  font-family: var(--main-font);
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #fff;
+}
+.settings__wrapper {
+  padding: 35px 0 35px;
+  background-color: var(--main-blue);
+  border-radius: 0 0 10px 10px;
+  border: 2px solid #ecc408;
+  border-top: none;
+}
+.settings__start-btn {
+  position: relative;
+  font-family: var(--main-font);
+  width: 200px;
+  text-transform: uppercase;
+  font-size: 25px;
+  height: 45px;
+  border-radius: 10px;
+  font-weight: 600;
+  background-color: rgb(241, 148, 42);
+  box-shadow: var(--main-shadow);
+}
+.settings__start-btn:active {
+  box-shadow: 5px 5px rgba(0, 0, 0, 0.25);
+  top: 5px;
+}
+.settings__btn:active {
+  /* transition: 400ms linear; */
+  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+  top: 3px;
+}
+.arcade__btn {
+  height: 60px;
+  width: 60px;
+  margin-right: 20px;
+}
+.arcade__btn-wrapper {
+  width: 420px;
+  height: 166px;
+  align-items: center;
+  display: flex;
+  /* margin-right: -20px; */
+}
+.arcade__btn--close {
+  background-color: #999;
+  top: 3px;
+  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+}
+.arcade__btn--close:active {
+  color: red;
+  transition: 200ms linear;
+}
+.arcade__btn--close:after {
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  width: 20px;
+  height: 20px;
+  background: url(./img/lock-closed.svg);
+}
+.count-player__wrapper {
+  width: 50%;
+}
+.settings__btn--choosed{
+  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+  top: 3px;
+  background-color: rgb(53, 181, 255);
+}
+.game__congratulation {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  /* opacity: 0.5; */
+  z-index: -1;
+  background-image: url("./img/congratulation.gif");
+}

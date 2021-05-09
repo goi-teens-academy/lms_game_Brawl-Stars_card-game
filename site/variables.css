@@ -1,0 +1,7 @@
+:root {
+  --main-blue: rgb(44, 80, 241);
+  --main-yellow:#ecc408;
+  --main-font:"Open Sans", sans-serif;
+  --main-shadow: 5px 10px rgba(0, 0, 0, 0.25);
+  --small-shadow: 3px 5px rgba(0, 0, 0, 0.25);
+}
