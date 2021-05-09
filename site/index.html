@@ -11,7 +11,7 @@
 
   <body>
     <main class="main">
-      <section class="start modal hidden-modal">
+      <section class="start modal">
         <div class="start__logo-wrapper">
           <!-- <a
             target="_blank"
@@ -63,7 +63,7 @@
           </div>
         </div>
       </section>
-      <section class="settings modal">
+      <section class="settings modal hidden-modal">
         <div class="settings__type-wrapper">
           <div
             data-type="singlePlayer"
@@ -83,7 +83,7 @@
             <div class="settings__count-cards">
               <h2 class="settings__headline">Виберіть кількість карток</h2>
               <div class="settings__wrappers count-cards__wrapper">
-                <button type="button" class="settings__btn count-btn" data-count="12">12</button
+                <button type="button" class="settings__btn count-btn settings__btn--choosed" data-count="12">12</button
                 ><button type="button" class="settings__btn count-btn" data-count="20">
                   20</button
                 ><button type="button" class="settings__btn count-btn" data-count="32">
@@ -98,7 +98,7 @@
               <div class="count-timer__wrapper settings__wrappers">
                 <button type="button" class="settings__btn count-timer" data-count="30">
                   0,5 хв</button
-                ><button type="button" class="settings__btn count-timer" data-count="60">
+                ><button type="button" class="settings__btn count-timer settings__btn--choosed" data-count="60">
                   1 хв</button
                 ><button type="button" class="settings__btn count-timer" data-count="120">
                   2 хв</button
@@ -112,7 +112,7 @@
             <div class="settings__count-cards">
               <h2 class="settings__headline">Виберіть кількість карток</h2>
               <div class="count-cards__wrapper settings__wrappers">
-                <button type="button" class="settings__btn count-btn" data-count="12">12</button
+                <button type="button" class="settings__btn count-btn settings__btn--choosed" data-count="12">12</button
                 ><button type="button" class="settings__btn count-btn" data-count="20">
                   20</button
                 ><button type="button" class="settings__btn count-btn" data-count="32">
@@ -125,11 +125,11 @@
             <div class="settings__count-player">
               <h2 class="settings__headline">Виберіть кількість гравців</h2>
               <div class="count-player__wrapper settings__wrappers">
-                <button  type="button" class="settings__btn count-timer" data-count="30">
+                <button  type="button" class="settings__btn count-timer settings__btn--choosed" data-count="2">
                   2</button
-                ><button type="button" class="settings__btn count-timer" data-count="60">
+                ><button type="button" class="settings__btn count-timer" data-count="3">
                   3</button
-                ><button type="button" class="settings__btn count-timer" data-count="120">
+                ><button type="button" class="settings__btn count-timer" data-count="4">
                   4
                 </button>
               </div>
@@ -171,8 +171,8 @@
         </div>
       </section>
     </main>
-    <audio autoplay='autoplay' loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio>
-    <audio src="./music/gameplay.mp3" class="audio__game-play"></audio>
+    <audio loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio>
+    <audio loop='loop' src="./music/gameplay.mp3" class="audio__game-play"></audio>
     <audio src="./music/won_sound.mp3" class="audio__won"></audio>
     <audio src="./music/lose_sound.mp3" class="audio__lose"></audio>
     <script src="./js/script.js" type="module"></script>
