@@ -159,6 +159,7 @@ export const startGame = (
     setTimeout(timer, 1000, timerCount, minutesRef, secondsRef);
   }
   drawCards(cardsAmount, cards, containerRef);
+  document.querySelector(".audio__main-theme").pause();
   document.querySelector(".audio__game-play").play();
   gamePlay(containerRef, playerAmount, gameType);
 };

@@ -135,6 +135,7 @@
 }
 .settings__btn {
   position: relative;
+  transition: 200ms linear;
   font-family: var(--main-font);
   border-radius: 10px;
   font-size: 20px;

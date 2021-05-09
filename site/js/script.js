@@ -37,6 +37,7 @@ document.querySelectorAll(".settings__type").forEach((type) => {
 });
 document.querySelectorAll(".count-cards__wrapper").forEach((container) => {
   container.addEventListener("click", () => {
+    if (event.target === event.currentTarget) return;
     refs.cardsAmount = +event.target.dataset.count;
     event.target.parentNode
       .querySelector(".settings__btn--choosed")
@@ -47,6 +48,7 @@ document.querySelectorAll(".count-cards__wrapper").forEach((container) => {
 document
   .querySelector(".count-timer__wrapper")
   .addEventListener("click", () => {
+    if (event.target === event.currentTarget) return;
     refs.timerCount = +event.target.dataset.count;
     event.target.parentNode
       .querySelector(".settings__btn--choosed")
@@ -54,7 +56,7 @@ document
     event.target.classList.add("settings__btn--choosed");
   });
   document.querySelector(".count-player__wrapper").addEventListener("click", () => {
-    refs.playerAmount = +event.target.dataset.count;
+    if (event.target === event.currentTarget) return;
     event.target.parentNode
       .querySelector(".settings__btn--choosed")
       .classList.remove("settings__btn--choosed");
