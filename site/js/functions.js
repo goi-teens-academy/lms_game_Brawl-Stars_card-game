@@ -70,7 +70,7 @@ const gamePlay = (container, playerAmount, gameType) => {
       } else {
         state.position = 1;
         state.blocked = true;
-        setTimeout(repairCard, 1800, event);
+        setTimeout(repairCard, 1000, event);
       }
     } else if (state.position === 1) {
       state.ref = event.target;
