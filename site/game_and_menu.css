@@ -14,8 +14,8 @@
   perspective: 1000px;
   transform-style: flat;
   margin: 5px;
-  width: 200px;
-  height: 320px;
+  width: 150px;
+  height: 240px;
   position: relative;
 }
 .card,
@@ -53,11 +53,59 @@
   opacity: 0;
   visibility: hidden;
 }
+/* .game__counters-wrapper{
+position: fixed;
+width: 100vw;
+height: 100vh;
+display: flex;
+justify-content: space-between;
+align-items:;
+} */
+.game__player-counter {
+  font-size: 40px;
+  font-family: var(--main-font);
+  color: #fff;
+  font-weight: 600;
+  position: fixed;
+  height: 10px;
+  width: 10px;
+  z-index: 4;
+}
+.game__player-counter--1 {
+  /* top: 120px; */
+  left: 20px;
+}
+.game__player-counter--2 {
+  /* top: 120px; */
+  right: 30px;
+}
+.game__player-counter--3 {
+  top: 90vh;
+  left: 20px;
+}
+.game__player-counter--4 {
+  top: 90vh;
+  right: 30px;
+}
 .hidden-modal {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
   position: absolute;
-  z-index: -1;
+  /* z-index: -1; */
   opacity: 0;
   visibility: hidden;
+}
+.settings__wrapper {
+  padding: 45px 0 65px;
+  background-color: var(--main-blue);
+  border-radius: 0 0 10px 10px;
+  border: 2px solid #ecc408;
+  border-top: none;
+  /* top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8); */
+  /* position: absolute; */
 }
 .scaled {
   transform: scale(4);
@@ -66,14 +114,17 @@
   position: relative;
 }
 .timer {
-  position: absolute;
+  position: fixed;
   top: 50px;
   right: 40px;
 }
 
 .timer__inner {
   display: inline-block;
-  font-size: 30px;
+  font-size: 40px;
+  color: #fff;
+  font-weight: 600;
+  font-family: var(--main-font);
 }
 .game__player-turn {
   font-size: 60px;
@@ -154,7 +205,8 @@
   flex-wrap: wrap;
 }
 .settings__by-type {
-  /* width: 1000px; */
+  transition: 800ms linear;
+  /* position: absolute; */
 }
 .settings__headline {
   font-family: var(--main-font);
@@ -163,13 +215,7 @@
   margin-bottom: 25px;
   color: #fff;
 }
-.settings__wrapper {
-  padding: 45px 0 65px;
-  background-color: var(--main-blue);
-  border-radius: 0 0 10px 10px;
-  border: 2px solid #ecc408;
-  border-top: none;
-}
+
 .settings__start-btn {
   margin-top: 25px;
   position: relative;
@@ -190,25 +236,28 @@
 }
 .settings__btn:active {
   /* transition: 400ms linear; */
-  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.25);
   top: 3px;
 }
 .arcade__btn {
-  height: 60px;
-  width: 60px;
-  margin-right: 20px;
+  height: 80px;
+  width: 80px;
+  margin-right: 10px;
+  margin-left: 10px;
+  font-size: 20px;
 }
 .arcade__btn-wrapper {
-  width: 420px;
-  height: 166px;
+  width: 100%;
+  max-width: 520px;
+  height: 240px;
   align-items: center;
   display: flex;
-  /* margin-right: -20px; */
+  margin: 0 auto;
 }
 .arcade__btn--close {
   background-color: #999;
   top: 3px;
-  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.25);
 }
 .arcade__btn--close:active {
   color: red;
@@ -225,20 +274,42 @@
   background: url(./img/lock-closed.svg);
 }
 .count-player__wrapper {
-  width: 50%;
+  width: 65%;
 }
-.settings__btn--choosed{
-  box-shadow: 3px 2px rgba(0, 0, 0, 0.25);
+.settings__btn--choosed {
+  box-shadow: 2px 2px rgba(0, 0, 0, 0.25);
   top: 3px;
   background-color: rgb(53, 181, 255);
 }
 .game__congratulation {
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  /* opacity: 0.5; */
-  z-index: -1;
+  /* width: 100vw; */
+  width: 100%;
+  min-height: 100vh;
+  position: absolute;
+  /* top: 0;
+  left: 0; */
+  /* opacity: 0.8; */
+  z-index: 1;
   background-image: url("./img/congratulation.gif");
+}
+.game__start-number {
+  font-size: 150px;
+  color: #fff;
+  font-family: var(--main-font);
+  background-color: var(--main-yellow);
+  font-weight: 800;
+  transition: 600ms linear;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  display: block;
+  text-align: center;
+  min-width: 200px;
+  padding: 20px;
+  border-radius: 20px;
+}
+.game__start-number-wrapper {
+  transition: 400ms linear;
 }

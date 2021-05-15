@@ -5,7 +5,7 @@ refs.containerRef = document.querySelector(".card-container");
 refs.settingsRef = document.querySelector(".settings");
 refs.cardsAmount = 12;
 refs.timerCount = 60;
-refs.playerAmount = 0;
+refs.playerAmount = 1;
 refs.gameType = "singlePlayer";
 
 // document.querySelector(".audio__main-theme").play();
@@ -57,6 +57,7 @@ document
   });
   document.querySelector(".count-player__wrapper").addEventListener("click", () => {
     if (event.target === event.currentTarget) return;
+    refs.playerAmount = +event.target.dataset.count;
     event.target.parentNode
       .querySelector(".settings__btn--choosed")
       .classList.remove("settings__btn--choosed");
@@ -73,5 +74,5 @@ document
       refs.playerAmount,
       refs.gameType
     );
-    refs.settingsRef.classList.add("hidden");
+    refs.settingsRef.classList.add("hidden-modal");
   });

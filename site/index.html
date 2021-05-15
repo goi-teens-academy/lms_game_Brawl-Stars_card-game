@@ -155,16 +155,24 @@
         <button type="button" class="settings__start-btn">start</button>
       </div>
       </section>
-
-      <section class="game">
         <div class="game__congratulation hidden"></div>
-        <div class="game__player-counter game__player-counter--1"></div>
-        <div class="game__player-counter game__player-counter--2"></div>
-        <div class="game__player-counter game__player-counter--3"></div>
-        <div class="game__player-counter game__player-counter--4"></div>
+
+      <section class="game hidden-modal">
+    <!-- <div class="game__counters-wrapper"> -->
+          <div class="game__player-counter hidden game__player-counter--1"></div>
+          <div class="game__player-counter hidden game__player-counter--2"></div>
+          <div class="game__player-counter hidden game__player-counter--3"></div>
+          <div class="game__player-counter hidden game__player-counter--4"></div>
+    <!-- </div> -->
+    <div class="game__start-number-wrapper hidden-modal">
+      <span class="game__start-number hidden-modal">3</span>
+      <span class="game__start-number hidden-modal">2</span>
+      <span class="game__start-number hidden-modal">1</span>
+      <span class="game__start-number hidden-modal">GO!</span>
+    </div>
         <div class="game__player-turn"></div>
         <div class="card-container"></div>
-        <div class="timer hidden">
+        <div class="timer hidden-modal">
           <div class="timer__minutes timer__inner">0</div>
           <span class="timer__inner">:</span>
           <div class="timer__seconds timer__inner">00</div>

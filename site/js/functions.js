@@ -1,5 +1,6 @@
 // генерує в випадкові послідовності картки (приймає кількість карток, масив карток та посилання куди вставити картки)
 const drawCards = (amount, cards, containerRef) => {
+  containerRef.querySelectorAll(".card").forEach((card) => card.remove());
   let collection = [];
   while (!(collection.length === amount)) {
     let random = Math.ceil(Math.random() * cards.length);
@@ -148,20 +149,42 @@ export const startGame = (
   playerAmount,
   gameType
 ) => {
-  containerRef.querySelectorAll(".card").forEach((card) => {
-    card.remove();
-  });
-  const timerRef = document.querySelector(".timer");
-  const minutesRef = document.querySelector(".timer__minutes");
-  const secondsRef = document.querySelector(".timer__seconds");
-  if (gameType === "singlePlayer") {
-    timerRef.classList.remove("hidden");
-    setTimeout(timer, 1000, timerCount, minutesRef, secondsRef);
-  }
+  document.querySelector(".game").classList.remove("hidden-modal");
   drawCards(cardsAmount, cards, containerRef);
+  const numbersRef = document.querySelector(".game__start-number-wrapper");
+  numbersRef.classList.remove("hidden-modal");
   document.querySelector(".audio__main-theme").pause();
-  document.querySelector(".audio__game-play").play();
-  gamePlay(containerRef, playerAmount, gameType);
+  let index = 0;
+  const startNumber = setInterval(() => {
+    if (index !== 0)
+      numbersRef.children[index - 1].classList.add("hidden-modal");
+    if (index === 4) {
+      clearInterval(startNumber);
+      numbersRef.classList.add("hidden-modal");
+      return;
+    }
+    numbersRef.children[index].classList.add("scaled");
+    numbersRef.children[index].classList.remove("hidden-modal");
+    index++;
+  }, 1000);
+  setTimeout(function () {
+    const gameCounterRef = [
+      ...document.querySelectorAll(".game__player-counter"),
+    ];
+
+    for (let i = 0; i < playerAmount; i++) {
+      gameCounterRef[i].classList.remove("hidden");
+    }
+    const timerRef = document.querySelector(".timer");
+    const minutesRef = document.querySelector(".timer__minutes");
+    const secondsRef = document.querySelector(".timer__seconds");
+    if (gameType === "singlePlayer") {
+      timerRef.classList.remove("hidden-modal");
+      timer(timerCount, minutesRef, secondsRef);
+    }
+    document.querySelector(".audio__game-play").play();
+    gamePlay(containerRef, playerAmount, gameType);
+  }, 4200);
 };
 
 // закінчує гру
@@ -169,7 +192,7 @@ const endGame = (timerCount) => {
   document.querySelector(".audio__game-play").pause();
   if (timerCount + 1 === 0) {
     document.querySelector(".audio__lose").play();
-    alert("loser");
+    alert("lose");
   } else {
     document.querySelector(".audio__won").play();
     document.querySelector(".game__congratulation").classList.remove("hidden");
