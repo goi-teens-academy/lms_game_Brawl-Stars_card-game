@@ -109,7 +109,7 @@ const gamePlay = (container, playerAmount, gameType) => {
           for (const player of state.winner) {
             string = `${string} player-${player + 1}`;
           }
-          alert(string);
+          document.querySelector(".win__headline").textContent=string;
           setTimeout(endGame, 500);
         }
       } else {
@@ -189,21 +189,25 @@ export const startGame = (
 
 // закінчує гру
 const endGame = (timerCount) => {
+  document.querySelector('.game').classList.add("hidden-modal");
   document.querySelector(".audio__game-play").pause();
   if (timerCount + 1 === 0) {
     document.querySelector(".audio__lose").play();
-    alert("lose");
+    document.querySelector(".lose").classList.remove('hidden-modal');
   } else {
     document.querySelector(".audio__won").play();
+    document.querySelector(".win").classList.remove('hidden-modal');
     document.querySelector(".game__congratulation").classList.remove("hidden");
-    alert("you won");
   }
 };
 // таймер (кількість часу, посилання на хилини, секунди)
 const timer = (timerCount, minutesRef, secondsRef) => {
   let minutes = (timerCount / 60) % 60;
   let seconds = timerCount % 60 < 10 ? `0${timerCount % 60}` : timerCount % 60;
-  if (gameResult === "win") return;
+  if (gameResult === "win") {
+    document.querySelector(".win__headline").textContent=`You win in ${timerCount} seconds`;
+    return
+  };
   if (timerCount < 0) {
     endGame(timerCount);
   } else {

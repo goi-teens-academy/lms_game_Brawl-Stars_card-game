@@ -41,21 +41,10 @@
         </div>
         <div class="how-to-play__wrapper">
           <p class="how-to-play__text">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora
-            laudantium fuga minima voluptatum? Voluptatibus consequatur unde
-            aliquam maiores dolores fugit. Lorem ipsum dolor sit amet
-            consectetur adipisicing elit. Deleniti animi aperiam quo illum
-            consequuntur velit rem repudiandae corporis sapiente voluptatibus.
-            Tempore hic nesciunt possimus sapiente provident, sequi ea
-            reprehenderit recusandae deleniti maiores nam explicabo temporibus.
-            Dolorum distinctio iste ullam expedita impedit minus? Autem,
-            nesciunt. Quo possimus nulla expedita cupiditate. Repellat,
-            repellendus eveniet. Omnis dignissimos vero esse doloremque cumque
-            vel, dolorem voluptatibus commodi minima asperiores deserunt tenetur
-            quod vitae velit ducimus perspiciatis quo ab exercitationem incidunt
-            necessitatibus deleniti sequi sed a. Temporibus molestiae eius
-            tempore libero, esse delectus dolor unde natus cumque aspernatur
-            facilis odit earum!
+            First, click the "play" button. You will see a table where you need to select the number of cards and time. If you are
+            not playing alone, go to the next "multiplayer" function, it is next to the "single player" function. You need to choose
+            the number of cards and the number of players. Then click "start". You see the cards on the screen. You must find two
+            identical cards for the time you have chosen.
           </p>
           <div class="how-to-play__photo-wrapper">
             <div></div>
@@ -177,6 +166,25 @@
           <span class="timer__inner">:</span>
           <div class="timer__seconds timer__inner">00</div>
         </div>
+      </section>
+      <section class="win modal hidden-modal">
+        <div class="win__content-wrapper">
+          <h2 class="win__headline">You WIN!</h2>
+          <button class="win__btn win__open-modal" type="button">
+            <span class="win__btn-text">Back to menu</span></button><button class="win__btn win__open-modal" type="button">
+            <span class="win__btn-text">Replay</span>
+          </button>
+        </div>
+        <img class='win__img' src="./img/win@1X.png" alt="win-image">
+      </section><section class="win lose modal hidden-modal">
+        <div class="win__content-wrapper">
+          <h2 class="win__headline">You LOSE</h2>
+          <button class="win__btn win__open-modal" type="button">
+            <span class="win__btn-text">Back to menu</span></button><button class="win__btn win__open-modal" type="button">
+            <span class="win__btn-text">Replay</span>
+          </button>
+        </div>
+        <img class='win__img' src="./img/lose@1X.png" alt="win-image">
       </section>
     </main>
     <audio loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio>

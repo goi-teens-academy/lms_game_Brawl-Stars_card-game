@@ -12,5 +12,4 @@
   left: 50%;
   transform: translate(-50%, -50%);
   transition: 400ms linear;
-  z-index: 3;
 }

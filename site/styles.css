@@ -3,21 +3,16 @@
 @import "./how-to-play_modal.css";
 @import "./start_modal.css";
 @import "./game_and_menu.css";
+@import "./win-modal.css";
 html {
   /* margin-top: -10px; */
   max-height: 100vh;
   max-width: 100vw;
 }
 .main {
+  padding: 20px;
   height: 100vh;
-  background:linear-gradient( rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1) ), url(./img/bg1.jpg) no-repeat center;
+  background: url(./img/bg1.jpg) no-repeat center;
   background-size: cover;
 }
-.modal {
-  text-align: center;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  transition: 400ms linear;
-}
+

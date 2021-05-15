@@ -104,8 +104,8 @@ align-items:;
   border-top: none;
   /* top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(0.8); */
-  /* position: absolute; */
+  transform: translate(-50%, -50%) scale(0.8);
+  position: absolute; */
 }
 .scaled {
   transform: scale(4);
@@ -205,7 +205,7 @@ align-items:;
   flex-wrap: wrap;
 }
 .settings__by-type {
-  transition: 800ms linear;
+  transition: 100ms linear;
   /* position: absolute; */
 }
 .settings__headline {
@@ -288,7 +288,7 @@ align-items:;
   position: absolute;
   /* top: 0;
   left: 0; */
-  /* opacity: 0.8; */
+  opacity: 0.8;
   z-index: 1;
   background-image: url("./img/congratulation.gif");
 }
@@ -312,4 +312,7 @@ align-items:;
 }
 .game__start-number-wrapper {
   transition: 400ms linear;
+}
+@media screen and (max-width: 768px) {
+  
 }
