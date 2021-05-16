@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
     <link rel="shortcut icon" href="#" type="image/x-icon" />
     <title>Сайтік на колінці</title>
   </head>
@@ -58,13 +58,13 @@
             data-type="singlePlayer"
             class="settings__type settings__type--active"
           >
-            <span class="game-type__text">Single player</span>
+            <span data-type="singlePlayer" class="game-type__text">Single player</span>
           </div>
           <div data-type="multiPlayer" class="settings__type">
-            <span class="game-type__text">Multi player</span>
+            <span data-type="multiPlayer" class="game-type__text">Multi player</span>
           </div>
           <div data-type="arcade" class="settings__type">
-            <span class="game-type__text">Arcade</span>
+            <span data-type="arcade" class="game-type__text">Arcade</span>
           </div>
         </div>
         <div class="settings__wrapper">
@@ -170,7 +170,7 @@
       <section class="win modal hidden-modal">
         <div class="win__content-wrapper">
           <h2 class="win__headline">You WIN!</h2>
-          <button class="win__btn win__open-modal" type="button">
+          <button class="win__btn win__open-menu win__open-modal" type="button">
             <span class="win__btn-text">Back to menu</span></button><button class="win__btn win__open-modal" type="button">
             <span class="win__btn-text">Replay</span>
           </button>
@@ -179,7 +179,7 @@
       </section><section class="win lose modal hidden-modal">
         <div class="win__content-wrapper">
           <h2 class="win__headline">You LOSE</h2>
-          <button class="win__btn win__open-modal" type="button">
+          <button class="win__btn win__open-menu win__open-modal" type="button">
             <span class="win__btn-text">Back to menu</span></button><button class="win__btn win__open-modal" type="button">
             <span class="win__btn-text">Replay</span>
           </button>
@@ -187,9 +187,11 @@
         <img class='win__img' src="./img/lose@1X.png" alt="win-image">
       </section>
     </main>
+
     <audio loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio>
     <audio loop='loop' src="./music/gameplay.mp3" class="audio__game-play"></audio>
     <audio src="./music/won_sound.mp3" class="audio__won"></audio>
+    <audio src="./music/countdown.mp3" class="audio__countdown"></audio>
     <audio src="./music/lose_sound.mp3" class="audio__lose"></audio>
     <script src="./js/script.js" type="module"></script>
   </body>

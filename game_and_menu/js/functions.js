@@ -13,7 +13,7 @@ const drawCards = (amount, cards, containerRef) => {
         random = Math.ceil(Math.random() * cards.length);
         if (setOfCards.includes(random)) {
           let card = cards.find((card) => card.id === random);
-          let string = `<div class="card card-${card.id}"><img src='./img/card-down.png' class="card__back" ><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'></div>`;
+          let string = `<div class="card card-${card.id}"><img data-id='${card.id}' src='./img/card-down.png' class="card__back" ><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'></div>`;
           containerRef.insertAdjacentHTML("beforeend", string);
           setOfCards.splice(setOfCards.indexOf(random), 1);
         }
@@ -42,20 +42,26 @@ const gamePlay = (container, playerAmount, gameType) => {
     state.blocked = false;
   };
   const repairCard = (event) => {
-    event.target.classList.remove("choosed");
-    state.ref.classList.remove("choosed");
-    event.target.previousSibling.classList.remove("flip");
-    state.ref.previousSibling.classList.remove("flip");
+    event.target.nextSibling.classList.remove("choosed");
+    state.ref.nextSibling.classList.remove("choosed");
+    event.target.classList.remove("flip");
+    state.ref.classList.remove("flip");
     state.blocked = false;
   };
   const playerCount = [...document.querySelectorAll(".game__player-counter")];
   const playerMessage = document.querySelector(".game__player-turn");
   // починає гру при сингл плеєрі і аркаді
   const compareCardSingle = () => {
-    if (state.blocked) return;
-    if (event.target === container) return;
-    event.target.classList.add("choosed");
-    event.target.previousSibling.classList.add("flip");
+    console.log(event.target);
+    if (
+      state.blocked ||
+      event.target === container ||
+      event.target === state.ref.nextSibling ||
+      state.ref.parentNode === event.target
+    )
+      return;
+    event.target.classList.add("flip");
+    event.target.nextSibling.classList.add("choosed");
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {
@@ -83,7 +89,7 @@ const gamePlay = (container, playerAmount, gameType) => {
     if (state.blocked) return;
     if (event.target === container) return;
     event.target.classList.add("choosed");
-    event.target.previousSibling.classList.add("flip");
+    event.target.classList.add("flip");
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {

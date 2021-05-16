@@ -9,7 +9,7 @@
 }
 .card {
   perspective: 1000px;
-  transform-style: flat;
+  /* transform-style: preserve-3d; */
   margin: 5px;
   width: 200px;
   height: 320px;
@@ -33,14 +33,16 @@
   height: 100%;
 }
 .card__photo {
-  opacity: 0;
+  backface-visibility: hidden;
+  /* opacity: 0; */
   transform: rotateY(-180deg);
 }
 .card__back {
+  backface-visibility: hidden;
   transform: rotateY(0deg);
 }
 .choosed {
-  opacity: 1;
+  /* opacity: 1; */
   transform: rotateY(0deg);
 }
 .flip {

@@ -22,7 +22,7 @@ document
   );
 document.querySelectorAll(".settings__type").forEach((type) => {
   type.addEventListener("click", () => {
-    refs.gameType = event.target.parentNode.dataset.type;
+    refs.gameType = event.target.dataset.type;
     document
       .querySelectorAll(".settings__by-type")
       .forEach((settings) => settings.classList.add("hidden-modal"));
@@ -55,7 +55,9 @@ document
       .classList.remove("settings__btn--choosed");
     event.target.classList.add("settings__btn--choosed");
   });
-  document.querySelector(".count-player__wrapper").addEventListener("click", () => {
+document
+  .querySelector(".count-player__wrapper")
+  .addEventListener("click", () => {
     if (event.target === event.currentTarget) return;
     refs.playerAmount = +event.target.dataset.count;
     event.target.parentNode
@@ -63,6 +65,15 @@ document
       .classList.remove("settings__btn--choosed");
     event.target.classList.add("settings__btn--choosed");
   });
+document.querySelectorAll(".win__open-menu").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    document.querySelector(".settings").classList.remove("hidden-modal");
+    document.querySelector(".game__congratulation").classList.add("hidden");
+    document.querySelector(".audio__main-theme").currentTime = 0;
+    document.querySelector(".audio__main-theme").play();
+    btn.parentNode.parentNode.classList.add("hidden-modal");
+  })
+);
 document
   .querySelector(".settings__start-btn")
   .addEventListener("click", function () {
