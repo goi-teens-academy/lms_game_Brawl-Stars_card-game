@@ -96,6 +96,13 @@ const gamePlay = (container, playerAmount, gameType) => {
         if (state.gameState === container.children.length / 2) {
           state.maxCount = 0;
           state.winner = [];
+          setTimeout(() => {
+            const gameCounterRef = document.querySelectorAll(
+              ".game__player-counter"
+            );
+            for (let i = 0; i < playerAmount; i++)
+              gameCounterRef[i].classList.add("hidden");
+          }, 500);
           state.count.map(
             (player) =>
               (state.maxCount =

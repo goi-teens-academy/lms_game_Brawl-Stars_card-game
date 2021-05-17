@@ -3,7 +3,7 @@ import { startGame } from "./functions.js";
 const refs = {};
 refs.containerRef = document.querySelector(".card-container");
 refs.settingsRef = document.querySelector(".settings");
-refs.cardsAmount = 12;
+refs.cardsAmount = 2;
 refs.timerCount = 60;
 refs.playerAmount = 1;
 refs.gameType = "singlePlayer";
