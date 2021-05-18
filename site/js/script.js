@@ -3,9 +3,9 @@ import { startGame } from "./functions.js";
 const refs = {};
 refs.containerRef = document.querySelector(".card-container");
 refs.settingsRef = document.querySelector(".settings");
-refs.cardsAmount = 2;
+refs.cardsAmount = 12;
 refs.timerCount = 60;
-refs.playerAmount = 1;
+refs.playerAmount = 0;
 refs.gameType = "singlePlayer";
 
 // document.querySelector(".audio__main-theme").play();
@@ -33,6 +33,16 @@ document.querySelectorAll(".settings__type").forEach((type) => {
       .querySelector(".settings__type--active")
       .classList.remove("settings__type--active");
     event.currentTarget.classList.add("settings__type--active");
+    if (event.target.dataset.type === "singlePlayer") {
+      refs.playerAmount = 0;
+    }
+    if (event.target.dataset.type === "multiPlayer") {
+      refs.playerAmount = [...document
+        .querySelector(".count-player__wrapper")
+        .children].find((btn) =>
+          btn.classList.contains("settings__btn--choosed")
+        ).dataset.count;
+    }
   });
 });
 document.querySelectorAll(".count-cards__wrapper").forEach((container) => {
@@ -72,6 +82,20 @@ document.querySelectorAll(".win__open-menu").forEach((btn) =>
     document.querySelector(".audio__main-theme").currentTime = 0;
     document.querySelector(".audio__main-theme").play();
     btn.parentNode.parentNode.classList.add("hidden-modal");
+  })
+);
+document.querySelectorAll(".win__replay").forEach((btn) =>
+  btn.addEventListener("click", () => {
+    startGame(
+      refs.cardsAmount,
+      cards,
+      refs.containerRef,
+      refs.timerCount,
+      refs.playerAmount,
+      refs.gameType
+    );
+    btn.parentNode.parentNode.classList.add("hidden-modal");
+    document.querySelector(".game__congratulation").classList.add("hidden");
   })
 );
 document

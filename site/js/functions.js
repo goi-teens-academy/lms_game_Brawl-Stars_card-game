@@ -100,8 +100,10 @@ const gamePlay = (container, playerAmount, gameType) => {
             const gameCounterRef = document.querySelectorAll(
               ".game__player-counter"
             );
-            for (let i = 0; i < playerAmount; i++)
+            for (let i = 0; i < playerAmount; i++) {
               gameCounterRef[i].classList.add("hidden");
+              console.log(gameCounterRef[i]);
+            }
           }, 500);
           state.count.map(
             (player) =>
@@ -187,6 +189,7 @@ export const startGame = (
 
     for (let i = 0; i < playerAmount; i++) {
       gameCounterRef[i].classList.remove("hidden");
+      console.log(gameCounterRef[i]);
     }
     const timerRef = document.querySelector(".timer");
     const minutesRef = document.querySelector(".timer__minutes");
