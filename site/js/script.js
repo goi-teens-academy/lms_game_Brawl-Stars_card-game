@@ -1,5 +1,6 @@
 import cards from "./cards.js";
 import { startGame } from "./functions.js";
+
 const refs = {};
 refs.containerRef = document.querySelector(".card-container");
 refs.settingsRef = document.querySelector(".settings");
@@ -8,7 +9,6 @@ refs.timerCount = 60;
 refs.playerAmount = 0;
 refs.gameType = "singlePlayer";
 
-// document.querySelector(".audio__main-theme").play();
 document.querySelector(".start__btn").addEventListener("click", () => {
   document.querySelector(".settings").classList.remove("hidden-modal");
   document.querySelector(".start").classList.add("hidden-modal");
@@ -31,7 +31,7 @@ document.querySelectorAll(".settings__type").forEach((type) => {
       .classList.remove("hidden-modal");
     document
       .querySelector(".settings__type--active")
-      .classList.remove("settings__type--active");
+       .classList.remove("settings__type--active");
     event.currentTarget.classList.add("settings__type--active");
     if (event.target.dataset.type === "singlePlayer") {
       refs.playerAmount = 0;

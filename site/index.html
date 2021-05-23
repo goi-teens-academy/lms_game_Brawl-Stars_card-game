@@ -10,15 +10,14 @@
   </head>
 
   <body>
-    <!-- TESTING -->
     <main class="main">
       <section class="start modal">
         <div class="start__logo-wrapper">
-          <!-- <a
+          <a
             target="_blank"
             href="https://dmytrokolisnyk2.github.io/ubermensches_project/build/"
             class="start__link"
-          > -->
+          >
             <img src="./img/logo-big@1X.png" class="start__logo" alt="logo"
           /></a>
         </div>
@@ -53,50 +52,6 @@
           </div>
         </div>
       </section>
-      <!-- <section class="modal" id="authors_modal1">
-        <div class="authors_content">
-          <span class="authors_close"><img src="./img/Cansel-button@1X.png" alt="#"></span>
-          <h2 class="authors_title">authors of this game</h2>
-          <div class="authors_wrapper">
-            <div class="authors_card">
-              <img class="authors_img" src="./img/authors1.png" alt="Bradley Hunter">
-              <h4 class="authors_name">
-                Bradley Hunter
-              </h4>
-              <p class="authors_text">
-                Based in Chicago. I love playing tennis and loud music.
-              </p>
-            </div>
-            <div class="authors_card">
-              <img class="authors_img" src="./img/authors2.png" alt="Bradley Hunter">
-              <h4 class="authors_name">
-                Bradley Hunter
-              </h4>
-              <p class="authors_text">
-                Based in Chicago. I love playing tennis and loud music.
-              </p>
-            </div>
-            <div class="authors_card">
-              <img class="authors_img" src="./img/authors3.png" alt="Bradley Hunter">
-              <h4 class="authors_name">
-                Bradley Hunter
-              </h4>
-              <p class="authors_text">
-                Based in Chicago. I love playing tennis and loud music.
-              </p>
-            </div>
-            <div class="authors_card">
-              <img class="authors_img" src="./img/authors4.png" alt="Bradley Hunter">
-              <h4 class="authors_name">
-                Bradley Hunter
-              </h4>
-              <p class="authors_text">
-                Based in Chicago. I love playing tennis and loud music.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section> -->
       <section class="settings modal hidden-modal">
         <div class="settings__type-wrapper">
           <div
@@ -118,12 +73,12 @@
               <h2 class="settings__headline">Виберіть кількість карток</h2>
               <div class="settings__wrappers count-cards__wrapper">
                 <button type="button" class="settings__btn count-btn settings__btn--choosed" data-count="12">12</button
-                ><button type="button" class="settings__btn count-btn" data-count="20">
-                  20</button
-                ><button type="button" class="settings__btn count-btn" data-count="32">
-                  32</button
-                ><button type="button" class="settings__btn count-btn" data-count="40">
-                  40
+                ><button type="button" class="settings__btn count-btn" data-count="18">
+                  18</button
+                ><button type="button" class="settings__btn count-btn" data-count="24">
+                  24</button
+                ><button type="button" class="settings__btn count-btn" data-count="36">
+                  36
                 </button>
               </div>
             </div>
@@ -147,12 +102,12 @@
               <h2 class="settings__headline">Виберіть кількість карток</h2>
               <div class="count-cards__wrapper settings__wrappers">
                 <button type="button" class="settings__btn count-btn settings__btn--choosed" data-count="12">12</button
-                ><button type="button" class="settings__btn count-btn" data-count="20">
-                  20</button
-                ><button type="button" class="settings__btn count-btn" data-count="32">
-                  32</button
-                ><button type="button" class="settings__btn count-btn" data-count="40">
-                  40
+                ><button type="button" class="settings__btn count-btn" data-count="18">
+                  18</button
+                ><button type="button" class="settings__btn count-btn" data-count="24">
+                  24</button
+                ><button type="button" class="settings__btn count-btn" data-count="36">
+                  36
                 </button>
               </div>
             </div>
@@ -189,14 +144,13 @@
         <button type="button" class="settings__start-btn">start</button>
       </div>
       </section>
-        <div class="game__congratulation hidden"></div>
-
+        <div class="game__congratulation hidden-modal"></div>
       <section class="game hidden-modal">
     <!-- <div class="game__counters-wrapper"> -->
-          <div class="game__player-counter hidden game__player-counter--1"></div>
-          <div class="game__player-counter hidden game__player-counter--2"></div>
-          <div class="game__player-counter hidden game__player-counter--3"></div>
-          <div class="game__player-counter hidden game__player-counter--4"></div>
+          <div class="game__player-counter hidden game__player-counter--1">0</div>
+          <div class="game__player-counter hidden game__player-counter--2">0</div>
+          <div class="game__player-counter hidden game__player-counter--3">0</div>
+          <div class="game__player-counter hidden game__player-counter--4">0</div>
     <!-- </div> -->
     <div class="game__start-number-wrapper hidden-modal">
       <span class="game__start-number hidden-modal">3</span>
@@ -204,8 +158,8 @@
       <span class="game__start-number hidden-modal">1</span>
       <span class="game__start-number hidden-modal">GO!</span>
     </div>
-        <div class="game__player-turn"></div>
-        <div class="card-container"></div>
+        <div class="game__player-turn hidden"></div>
+        <div class="game__card-container-wrapper"><div class="card-container"></div></div>
         <div class="timer hidden-modal">
           <div class="timer__minutes timer__inner">0</div>
           <span class="timer__inner">:</span>

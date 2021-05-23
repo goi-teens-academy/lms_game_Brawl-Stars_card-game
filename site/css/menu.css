@@ -1,98 +1,15 @@
 .settings {
   width: 100%;
 }
-.card-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
-  max-width: 870px;
-  margin: 10px auto 40px;
-  perspective: 1000px;
-}
-.card {
-  perspective: 1000px;
-  margin: 5px;
-  width: 150px;
-  height: 240px;
-  position: relative;
-}
-.card,
-.card__photo,
-.card__back {
-  transition: 400ms linear;
-  border-radius: 11px;
-}
-.card:active {
-  transform: scale(0.95);
-}
-.card__photo,
-.card__back {
-  backface-visibility: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-.card__photo {
-  transform: rotateY(-180deg);
-}
-.card__back {
-  transform: rotateY(0deg);
-}
-.choosed {
-  transform: rotateY(0deg);
-}
-.flip {
-  transform: rotateY(180deg);
-}
-.hidden {
-  opacity: 0;
-  visibility: hidden;
-}
-/* .game__counters-wrapper{
-position: fixed;
-width: 100vw;
-height: 100vh;
-display: flex;
-justify-content: space-between;
-align-items:;
-} */
-.game__player-counter {
-  font-size: 40px;
-  font-family: var(--main-font);
-  color: #fff;
-  font-weight: 600;
-  position: fixed;
-  height: 10px;
-  width: 10px;
-  z-index: 4;
-}
-.game__player-counter--1 {
-  /* top: 120px; */
-  left: 20px;
-}
-.game__player-counter--2 {
-  /* top: 120px; */
-  right: 30px;
-}
-.game__player-counter--3 {
-  top: 90vh;
-  left: 20px;
-}
-.game__player-counter--4 {
-  top: 90vh;
-  right: 30px;
-}
+
 .hidden-modal {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(0.8);
   position: absolute;
-  /* z-index: -1; */
   opacity: 0;
   visibility: hidden;
+  z-index: -1;
 }
 .settings__wrapper {
   padding: 45px 0 65px;
@@ -100,40 +17,9 @@ align-items:;
   border-radius: 0 0 10px 10px;
   border: 2px solid #ecc408;
   border-top: none;
-  /* top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  position: absolute; */
-}
-.scaled {
-  transform: scale(4);
-}
-.game {
-  position: relative;
-}
-.timer {
-  position: fixed;
-  top: 50px;
-  right: 40px;
 }
 
-.timer__inner {
-  display: inline-block;
-  font-size: 40px;
-  color: #fff;
-  font-weight: 600;
-  font-family: var(--main-font);
-}
-.game__player-turn {
-  font-size: 60px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  display: inline-block;
-  background-color: #fff;
-}
+
 .settings__type-wrapper {
   display: flex;
   align-items: flex-start;
@@ -144,7 +30,6 @@ align-items:;
   margin: 0 auto;
 }
 .settings__type {
-  /* outline: 2px solid #ecc408; */
   transition: 200ms linear;
   cursor: pointer;
   position: relative;
@@ -179,7 +64,6 @@ align-items:;
   display: block;
   width: 100%;
   height: 2px;
-  /* background-color: #fff; */
   background-color: var(--main-yellow);
 }
 .settings__btn {
@@ -204,7 +88,6 @@ align-items:;
 }
 .settings__by-type {
   transition: 100ms linear;
-  /* position: absolute; */
 }
 .settings__headline {
   font-family: var(--main-font);
@@ -225,7 +108,6 @@ align-items:;
   border-radius: 10px;
   font-weight: 800;
   background-color: rgb(241, 148, 42);
-  /* background-color: var(--main-yellow); */
   box-shadow: var(--main-shadow);
 }
 .settings__start-btn:active {
@@ -233,7 +115,6 @@ align-items:;
   top: 5px;
 }
 .settings__btn:active {
-  /* transition: 400ms linear; */
   box-shadow: 2px 2px rgba(0, 0, 0, 0.25);
   top: 3px;
 }
@@ -279,44 +160,7 @@ align-items:;
   top: 3px;
   background-color: rgb(53, 181, 255);
 }
-.game__congratulation {
-  /* width: 100vw; */
-  width: 100%;
-  min-height: 100vh;
-  position: absolute;
-  /* top: 0;
-  left: 0; */
-  opacity: 0.8;
-  z-index: 1;
-  background-image: url("../img/congratulation.gif");
-}
-.game__start-number {
-  font-size: 150px;
-  color: #fff;
-  font-family: var(--main-font);
-  background-color: var(--main-yellow);
-  font-weight: 800;
-  transition: 500ms linear;
-  /* top: 50%;
-  left: 50%; */
-  /* transform: translate(-50%, -50%); */
-  /* position: absolute; */
-  top: 0;
-  left: 0;
-  display: block;
-  text-align: center;
-  min-width: 200px;
-  padding: 20px;
-  border-radius: 20px;
-}
-.game__start-number-wrapper {
-  z-index: 2;
-  transition: 400ms linear;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
 @media screen and (max-width: 768px) {
   
 }

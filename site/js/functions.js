@@ -22,8 +22,8 @@ const drawCards = (amount, cards, containerRef) => {
     }
   }
 };
-
 let gameResult;
+const funcGlob = {};
 // починає гру на заданому контейнері карток (контейнер карток, тип гри)
 const gamePlay = (container, playerAmount, gameType) => {
   const state = {
@@ -41,6 +41,10 @@ const gamePlay = (container, playerAmount, gameType) => {
     event.target.parentNode.classList.add("hidden");
     state.ref.parentNode.classList.add("hidden");
     state.blocked = false;
+    setTimeout(() => {
+      event.target.classList.remove("scaled");
+      state.ref.classList.remove("scaled");
+    }, 300);
   };
   const repairCard = (event) => {
     event.target.nextSibling.classList.remove("choosed");
@@ -52,7 +56,7 @@ const gamePlay = (container, playerAmount, gameType) => {
   const playerCount = [...document.querySelectorAll(".game__player-counter")];
   const playerMessage = document.querySelector(".game__player-turn");
   // починає гру при сингл плеєрі і аркаді
-  const compareCardSingle = () => {
+  funcGlob.compareCardSingle = () => {
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
     event.target.nextSibling.classList.add("choosed");
@@ -64,23 +68,26 @@ const gamePlay = (container, playerAmount, gameType) => {
         setTimeout(removeCards, 400, event);
         state.gameState++;
         if (state.gameState === container.children.length / 2) {
+          state.gameState = 0;
           gameResult = "win";
           container.removeEventListener("click", compareCardSingle);
-          setTimeout(endGame, 500);
+          setTimeout(endGame, 500, 1, container.children.length);
         }
-      } else {
+      }
+     if (state.ref.dataset.id !== event.target.dataset.id){
         state.position = 1;
         state.blocked = true;
         setTimeout(repairCard, 1000, event);
       }
-    } else if (state.position === 1) {
+    }
+    else if (state.position === 1) {
       state.ref = event.target;
       state.position = 2;
     }
   };
 
   // починає гру при мульти плеєрі
-  const compareCardMulti = () => {
+  funcGlob.compareCardMulti = () => {
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
     event.target.nextSibling.classList.add("choosed");
@@ -94,6 +101,7 @@ const gamePlay = (container, playerAmount, gameType) => {
         playerCount[state.move].textContent++;
         state.count[state.move]++;
         if (state.gameState === container.children.length / 2) {
+          state.gameState = 0;
           state.maxCount = 0;
           state.winner = [];
           setTimeout(() => {
@@ -119,12 +127,21 @@ const gamePlay = (container, playerAmount, gameType) => {
           }
           document.querySelector(".win__headline").textContent = string;
           container.removeEventListener("click", compareCardMulti);
-          setTimeout(endGame, 500);
+          playerCount[state.move].classList.add(
+            "game__player-counter--current"
+          );
+
+          setTimeout(endGame, 500, 1, container.children.length);
         }
       } else {
         state.position = 1;
         state.blocked = true;
+        playerCount[state.move].classList.remove(
+          "game__player-counter--current"
+        );
         state.move = state.move === playerAmount - 1 ? 0 : state.move + 1;
+        playerCount[state.move].classList.add("game__player-counter--current");
+
         setTimeout(repairCard, 800, event);
         setTimeout(function () {
           playerMessage.classList.remove("hidden");
@@ -132,8 +149,7 @@ const gamePlay = (container, playerAmount, gameType) => {
         }, 600);
         setTimeout(function () {
           playerMessage.classList.add("hidden");
-          playerMessage.classList.remove("scaled");
-        }, 1300);
+        }, 1500);
       }
     } else if (state.position === 1) {
       state.ref = event.target;
@@ -141,9 +157,10 @@ const gamePlay = (container, playerAmount, gameType) => {
     }
   };
   if (gameType === "singlePlayer")
-    container.addEventListener("click", compareCardSingle);
+    container.addEventListener("click", funcGlob.compareCardSingle);
   if (gameType === "multiPlayer") {
-    container.addEventListener("click", compareCardMulti);
+    container.addEventListener("click", funcGlob.compareCardMulti);
+    playerCount[state.move].classList.add("game__player-counter--current");
     playerCount.forEach((count) => (count.textContent = 0));
   }
 };
@@ -158,13 +175,14 @@ export const startGame = (
   playerAmount,
   gameType
 ) => {
+  containerRef.classList.add(`card-container--${cardsAmount}`);
   document.querySelector(".game").classList.remove("hidden-modal");
   drawCards(cardsAmount, cards, containerRef);
   const numbersRef = document.querySelector(".game__start-number-wrapper");
   numbersRef.classList.remove("hidden-modal");
   const countdownRef = document.querySelector(".audio__countdown");
   countdownRef.currentTime = 0.3;
-  countdownRef.speed = 2;
+  // countdownRef.speed = 2;
   countdownRef.play();
   document.querySelector(".audio__main-theme").pause();
   let index = 0;
@@ -196,7 +214,7 @@ export const startGame = (
     const secondsRef = document.querySelector(".timer__seconds");
     if (gameType === "singlePlayer") {
       timerRef.classList.remove("hidden-modal");
-      timer(timerCount, minutesRef, secondsRef);
+      timer(timerCount, minutesRef, secondsRef, cardsAmount);
     }
     document.querySelector(".audio__game-play").currentTime = 0;
     document.querySelector(".audio__game-play").play();
@@ -205,12 +223,13 @@ export const startGame = (
 };
 
 // закінчує гру
-const endGame = (timerCount) => {
+const endGame = (timerCount, cardsAmount) => {
+  const containerRef = document.querySelector(".card-container");
+  containerRef.removeEventListener("click", funcGlob.compareCardSingle);
+  containerRef.classList.remove(`card-container--${cardsAmount}`);
   document.querySelector(".game").classList.add("hidden-modal");
   document.querySelector(".audio__game-play").pause();
   document.querySelector(".timer").classList.add("hidden-modal");
-  // document.querySelector(".timer__minutes").textContent = 0;
-  // document.querySelector(".timer__seconds").textContent = "00";
   if (timerCount + 1 === 0) {
     document.querySelector(".audio__lose").play();
     document.querySelector(".lose").classList.remove("hidden-modal");
@@ -222,7 +241,7 @@ const endGame = (timerCount) => {
   }
 };
 // таймер (кількість часу, посилання на хилини, секунди)
-const timer = (timerCount, minutesRef, secondsRef) => {
+const timer = (timerCount, minutesRef, secondsRef, cardsAmount) => {
   let minutes = (timerCount / 60) % 60;
   let seconds = timerCount % 60 < 10 ? `0${timerCount % 60}` : timerCount % 60;
   if (gameResult === "win") {
@@ -233,7 +252,7 @@ const timer = (timerCount, minutesRef, secondsRef) => {
     return;
   }
   if (timerCount < 0) {
-    endGame(timerCount);
+    endGame(timerCount, cardsAmount);
   } else {
     timerCount--;
     minutesRef.innerHTML = Math.floor(minutes);
