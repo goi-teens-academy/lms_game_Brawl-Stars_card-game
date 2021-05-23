@@ -154,7 +154,7 @@
   left: 0;
   opacity: 0.8;
   z-index: 1;
-  background-image: url("../img/congratulation.gif");
+  background-image: url(../img/congratulation.gif);
 }
 .game__start-number {
   font-size: 150px;

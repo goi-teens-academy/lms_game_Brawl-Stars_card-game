@@ -16,12 +16,12 @@ const drawCards = (amount, cards, containerRef) => {
           let card = cards.find((card) => card.id === random);
           let string = `<div class="card card-${card.id}">
   <picture>
-    <source data-id='${card.id}' class="card__back" srcset="./img/card-down.webp" type="image/webp"><img
+    <source srcset="./img/card-down.webp" type="image/webp"><img
       data-id='${card.id}' src='./img/card-down.png' class="card__back">
   </picture>
   <picture>
-    <source srcset="${card.webp}" type="image/webp" class="card__photo
-      data-id='${card.id}"><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'>
+    <source srcset="${card.webp}" type="image/webp">
+    <img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'>
   </picture>
 </div>`;
           // let string = `<div class="card card-${card.id}"><img data-id='${card.id}' src='./img/card-down.png' class="card__back" ><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'></div>`;
@@ -230,7 +230,7 @@ export const startGame = (
     document.querySelector(".audio__game-play").currentTime = 0;
     document.querySelector(".audio__game-play").play();
     gamePlay(containerRef, playerAmount, gameType);
-  }, 100); //7400
+  }, 7400); //7400
 };
 
 // закінчує гру
