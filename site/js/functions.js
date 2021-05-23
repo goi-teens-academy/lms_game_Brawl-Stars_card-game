@@ -14,7 +14,17 @@ const drawCards = (amount, cards, containerRef) => {
         random = Math.ceil(Math.random() * cards.length);
         if (setOfCards.includes(random)) {
           let card = cards.find((card) => card.id === random);
-          let string = `<div class="card card-${card.id}"><img data-id='${card.id}' src='./img/card-down.png' class="card__back" ><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'></div>`;
+          let string = `<div class="card card-${card.id}">
+  <picture>
+    <source data-id='${card.id}' class="card__back" srcset="./img/card-down.webp" type="image/webp"><img
+      data-id='${card.id}' src='./img/card-down.png' class="card__back">
+  </picture>
+  <picture>
+    <source srcset="${card.webp}" type="image/webp" class="card__photo
+      data-id='${card.id}"><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'>
+  </picture>
+</div>`;
+          // let string = `<div class="card card-${card.id}"><img data-id='${card.id}' src='./img/card-down.png' class="card__back" ><img class="card__photo" src="${card.src}" alt="${card.description}" data-id='${card.id}'></div>`;
           containerRef.insertAdjacentHTML("beforeend", string);
           setOfCards.splice(setOfCards.indexOf(random), 1);
         }
@@ -22,6 +32,7 @@ const drawCards = (amount, cards, containerRef) => {
     }
   }
 };
+// <source srcset="./img/Cansel-button@1X.webp" type="image/webp"><img src="./img/Cansel-button@1X.png" alt="close_btn" />
 let gameResult;
 const funcGlob = {};
 // починає гру на заданому контейнері карток (контейнер карток, тип гри)
@@ -36,19 +47,19 @@ const gamePlay = (container, playerAmount, gameType) => {
     count: [0, 0, 0, 0],
   };
   const removeCards = (event) => {
-    event.target.classList.add("scaled");
-    state.ref.classList.add("scaled");
-    event.target.parentNode.classList.add("hidden");
-    state.ref.parentNode.classList.add("hidden");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
+    state.ref.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
+    event.target.parentNode.parentNode.classList.add("hidden");
+    state.ref.parentNode.parentNode.classList.add("hidden");
     state.blocked = false;
     setTimeout(() => {
-      event.target.classList.remove("scaled");
-      state.ref.classList.remove("scaled");
+      event.target.parentNode.nextElementSibling.lastElementChild.classList.remove("scaled");
+      state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove("scaled");
     }, 300);
   };
   const repairCard = (event) => {
-    event.target.nextSibling.classList.remove("choosed");
-    state.ref.nextSibling.classList.remove("choosed");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.remove("choosed");
+    state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove("choosed");
     event.target.classList.remove("flip");
     state.ref.classList.remove("flip");
     state.blocked = false;
@@ -57,9 +68,11 @@ const gamePlay = (container, playerAmount, gameType) => {
   const playerMessage = document.querySelector(".game__player-turn");
   // починає гру при сингл плеєрі і аркаді
   funcGlob.compareCardSingle = () => {
+    console.log(event.target);
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
-    event.target.nextSibling.classList.add("choosed");
+    console.log(event.target.parentNode.nextElementSibling.lastElementChild);
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {
@@ -70,17 +83,16 @@ const gamePlay = (container, playerAmount, gameType) => {
         if (state.gameState === container.children.length / 2) {
           state.gameState = 0;
           gameResult = "win";
-          container.removeEventListener("click", compareCardSingle);
+          container.removeEventListener("click", funcGlob.compareCardSingle);
           setTimeout(endGame, 500, 1, container.children.length);
         }
       }
-     if (state.ref.dataset.id !== event.target.dataset.id){
+      if (state.ref.dataset.id !== event.target.dataset.id) {
         state.position = 1;
         state.blocked = true;
         setTimeout(repairCard, 1000, event);
       }
-    }
-    else if (state.position === 1) {
+    } else if (state.position === 1) {
       state.ref = event.target;
       state.position = 2;
     }
@@ -90,7 +102,7 @@ const gamePlay = (container, playerAmount, gameType) => {
   funcGlob.compareCardMulti = () => {
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
-    event.target.nextSibling.classList.add("choosed");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {
@@ -126,7 +138,7 @@ const gamePlay = (container, playerAmount, gameType) => {
             string = `${string} player-${player + 1}`;
           }
           document.querySelector(".win__headline").textContent = string;
-          container.removeEventListener("click", compareCardMulti);
+          container.removeEventListener("click", funcGlob.compareCardMulti);
           playerCount[state.move].classList.add(
             "game__player-counter--current"
           );
@@ -182,7 +194,6 @@ export const startGame = (
   numbersRef.classList.remove("hidden-modal");
   const countdownRef = document.querySelector(".audio__countdown");
   countdownRef.currentTime = 0.3;
-  // countdownRef.speed = 2;
   countdownRef.play();
   document.querySelector(".audio__main-theme").pause();
   let index = 0;
@@ -219,7 +230,7 @@ export const startGame = (
     document.querySelector(".audio__game-play").currentTime = 0;
     document.querySelector(".audio__game-play").play();
     gamePlay(containerRef, playerAmount, gameType);
-  }, 7400);
+  }, 100); //7400
 };
 
 // закінчує гру

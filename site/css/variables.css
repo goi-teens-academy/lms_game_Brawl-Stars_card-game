@@ -14,3 +14,8 @@
   transition: 400ms linear;
   z-index: 3;
 }
+.main {
+  min-height: 100vh;
+  background: url(../img/bg1.jpg) no-repeat center;
+  background-size: cover;
+}
