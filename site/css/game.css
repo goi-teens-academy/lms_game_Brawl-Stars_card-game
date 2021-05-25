@@ -3,12 +3,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 90vw;
+  width: 100%;
   margin: auto;
   perspective: 1000px;
   padding: 0 40px 0 40px;
 }
 .game__card-container-wrapper {
+  padding:0 130px;
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -53,7 +54,7 @@
 .card,
 .card__photo,
 .card__back {
-  transition: 400ms linear;
+  transition: 500ms linear;
   border-radius: 6%;
 }
 .card:active {
@@ -210,7 +211,8 @@
   .card-container--36 {
     max-width: 845px;
   }
-}@media screen and (max-height: 555px) {
+}
+@media screen and (max-height: 555px) {
   .card-container--12 {
     max-width: 400px;
   }
@@ -238,3 +240,8 @@
     max-width: 550px;
   }
 }
+/* @media screen  and (max-width:900px) {
+  .game__card-container-wrapper {
+  padding:0 30px;
+}
+} */
