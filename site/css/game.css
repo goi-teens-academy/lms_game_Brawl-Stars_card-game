@@ -3,13 +3,13 @@
   flex-wrap: wrap;
   justify-content: space-around;
   align-items: center;
-  width: 100%;
+  width: 90%;
   margin: auto;
   perspective: 1000px;
   padding: 0 40px 0 40px;
 }
 .game__card-container-wrapper {
-  padding:0 130px;
+  /* padding:0 130px; */
   min-height: 100vh;
   display: flex;
   align-items: center;

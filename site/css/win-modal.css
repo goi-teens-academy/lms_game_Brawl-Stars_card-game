@@ -4,11 +4,7 @@
   max-width: 1200px;
   width: 90%;
 }
-picture{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+
 .win__img {
   width: 100%;
   max-width: 580px;

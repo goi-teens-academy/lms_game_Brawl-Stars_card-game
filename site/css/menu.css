@@ -1,16 +1,6 @@
 .settings {
   width: 100%;
 }
-
-.hidden-modal {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0.8);
-  position: absolute;
-  opacity: 0;
-  visibility: hidden;
-  /* z-index: -1; */
-}
 .settings__wrapper {
   padding: 45px 0 65px;
   background-color: var(--main-blue);
