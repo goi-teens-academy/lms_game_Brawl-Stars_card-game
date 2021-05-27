@@ -258,7 +258,7 @@ const timer = (timerCount, minutesRef, secondsRef, cardsAmount) => {
   if (gameResult === "win") {
     document.querySelector(
       ".win__headline"
-    ).textContent = `You win in ${timerCount} seconds`;
+    ).textContent = `You won in ${timerCount} seconds`;
     gameResult = "";
     return;
   }
