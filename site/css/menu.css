@@ -9,7 +9,6 @@
   border-top: none;
 }
 
-
 .settings__type-wrapper {
   display: flex;
   align-items: flex-start;
@@ -131,7 +130,9 @@
 .arcade__btn--close:active {
   color: red;
   transition: 200ms linear;
+  border: 3px solid red;
 }
+
 .arcade__btn--close:after {
   content: "";
   display: block;
@@ -152,5 +153,4 @@
 }
 
 @media screen and (max-width: 768px) {
-  
 }

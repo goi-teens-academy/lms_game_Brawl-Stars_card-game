@@ -1,6 +1,5 @@
 import cards from "./cards.js";
 import { startGame } from "./functions.js";
-
 const refs = {};
 refs.containerRef = document.querySelector(".card-container");
 refs.settingsRef = document.querySelector(".settings");
@@ -8,6 +7,10 @@ refs.cardsAmount = 12;
 refs.timerCount = 60;
 refs.playerAmount = 0;
 refs.gameType = "singlePlayer";
+refs.currentLevel = 1;
+console.log(window.localStorage.getItem("level"));
+
+window.localStorage.setItem("level", window.localStorage.getItem("level") || 1);
 
 document.querySelector(".start__btn").addEventListener("click", () => {
   document.querySelector(".settings").classList.remove("hidden-modal");
@@ -31,17 +34,24 @@ document.querySelectorAll(".settings__type").forEach((type) => {
       .classList.remove("hidden-modal");
     document
       .querySelector(".settings__type--active")
-       .classList.remove("settings__type--active");
+      .classList.remove("settings__type--active");
     event.currentTarget.classList.add("settings__type--active");
     if (event.target.dataset.type === "singlePlayer") {
       refs.playerAmount = 0;
     }
     if (event.target.dataset.type === "multiPlayer") {
-      refs.playerAmount = [...document
-        .querySelector(".count-player__wrapper")
-        .children].find((btn) =>
-          btn.classList.contains("settings__btn--choosed")
-        ).dataset.count;
+      refs.playerAmount = [
+        ...document.querySelector(".count-player__wrapper").children,
+      ].find((btn) =>
+        btn.classList.contains("settings__btn--choosed")
+      ).dataset.count;
+    }
+    if (event.currentTarget.dataset.type === "arcade") {
+      refs.level = +window.localStorage.getItem("level");
+      const btnWrapper = document.querySelector(".arcade__btn-wrapper");
+      for (let i = 0; i < refs.level; i++) {
+        btnWrapper.children[i].classList.remove("arcade__btn--close");
+      }
     }
   });
 });
@@ -75,6 +85,19 @@ document
       .classList.remove("settings__btn--choosed");
     event.target.classList.add("settings__btn--choosed");
   });
+document.querySelector(".arcade__btn-wrapper").addEventListener("click", () => {
+  if (
+    event.target === event.currentTarget ||
+    event.target.classList.contains("arcade__btn--close")
+  )
+    return;
+  refs.currentLevel = +event.target.textContent;
+  event.target.parentNode
+    .querySelector(".settings__btn--choosed")
+    .classList.remove("settings__btn--choosed");
+  event.target.classList.add("settings__btn--choosed");
+  console.log(refs.currentLevel);
+});
 document.querySelectorAll(".win__open-menu").forEach((btn) =>
   btn.addEventListener("click", () => {
     document.querySelector(".settings").classList.remove("hidden-modal");
@@ -92,7 +115,8 @@ document.querySelectorAll(".win__replay").forEach((btn) =>
       refs.containerRef,
       refs.timerCount,
       refs.playerAmount,
-      refs.gameType
+      refs.gameType,
+      refs.currentLevel
     );
     btn.parentNode.parentNode.classList.add("hidden-modal");
     document.querySelector(".game__congratulation").classList.add("hidden");
@@ -107,7 +131,8 @@ document
       refs.containerRef,
       refs.timerCount,
       refs.playerAmount,
-      refs.gameType
+      refs.gameType,
+      refs.currentLevel
     );
     refs.settingsRef.classList.add("hidden-modal");
   });

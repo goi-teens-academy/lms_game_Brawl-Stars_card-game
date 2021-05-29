@@ -52,8 +52,7 @@
         </div>
       </div>
     </section>
-    <section class="settings modal
-        hidden-modal">
+    <section class="settings modal hidden-modal">
       <div class="settings__type-wrapper">
         <div data-type="singlePlayer" class="settings__type
             settings__type--active"> <span data-type="singlePlayer" class="game-type__text">Single player</span> </div>
@@ -112,7 +111,7 @@
           <div class="settings__count-cards">
             <h2 class="settings__headline">Select level</h2>
             <div class="arcade__btn-wrapper settings__wrappers"> <button
-                class="settings__btn arcade__btn">1</button><button
+                class="settings__btn arcade__btn settings__btn--choosed" >1</button><button
                 class="settings__btn arcade__btn arcade__btn--close">2</button><button
                 class="settings__btn arcade__btn arcade__btn--close">3</button><button
                 class="settings__btn arcade__btn arcade__btn--close">4</button><button
@@ -158,8 +157,17 @@
           type="button"> <span class="win__btn-text">Replay</span> </button>
       </div>
       <picture>
-        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png"
-          alt="win-image">
+        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png" alt="win-image">
+      </picture>
+    </section><section class="win arcade modal hidden-modal">
+      <div class="win__content-wrapper">
+        <h2 class="win__headline">You </h2>
+        <button class="win__btn win__open-menu win__open-modal" type="button">
+          <span class="win__btn-text">Next level</span></button><button class="win__btn win__replay win__open-modal"
+          type="button"> <span class="win__btn-text">Replay</span> </button>
+      </div>
+      <picture>
+        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png" alt="win-image">
       </picture>
     </section>
     <section class="win lose modal hidden-modal">

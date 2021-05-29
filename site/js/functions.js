@@ -1,4 +1,6 @@
 // генерує в випадкові послідовності картки (приймає кількість карток, масив карток та посилання куди вставити картки)
+import level from "./level.js";
+
 const drawCards = (amount, cards, containerRef) => {
   containerRef.querySelectorAll(".card").forEach((card) => card.remove());
   let collection = [];
@@ -47,19 +49,31 @@ const gamePlay = (container, playerAmount, gameType) => {
     count: [0, 0, 0, 0],
   };
   const removeCards = (event) => {
-    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
-    state.ref.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add(
+      "scaled"
+    );
+    state.ref.parentNode.nextElementSibling.lastElementChild.classList.add(
+      "scaled"
+    );
     event.target.parentNode.parentNode.classList.add("hidden");
     state.ref.parentNode.parentNode.classList.add("hidden");
     state.blocked = false;
     setTimeout(() => {
-      event.target.parentNode.nextElementSibling.lastElementChild.classList.remove("scaled");
-      state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove("scaled");
+      event.target.parentNode.nextElementSibling.lastElementChild.classList.remove(
+        "scaled"
+      );
+      state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove(
+        "scaled"
+      );
     }, 300);
   };
   const repairCard = (event) => {
-    event.target.parentNode.nextElementSibling.lastElementChild.classList.remove("choosed");
-    state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove("choosed");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.remove(
+      "choosed"
+    );
+    state.ref.parentNode.nextElementSibling.lastElementChild.classList.remove(
+      "choosed"
+    );
     event.target.classList.remove("flip");
     state.ref.classList.remove("flip");
     state.blocked = false;
@@ -68,11 +82,11 @@ const gamePlay = (container, playerAmount, gameType) => {
   const playerMessage = document.querySelector(".game__player-turn");
   // починає гру при сингл плеєрі і аркаді
   funcGlob.compareCardSingle = () => {
-    console.log(event.target);
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
-    console.log(event.target.parentNode.nextElementSibling.lastElementChild);
-    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add(
+      "choosed"
+    );
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {
@@ -83,6 +97,15 @@ const gamePlay = (container, playerAmount, gameType) => {
         if (state.gameState === container.children.length / 2) {
           state.gameState = 0;
           gameResult = "win";
+          if (gameType === "arcade") {
+            const levelRef = +window.localStorage.getItem("level");
+            window.localStorage.setItem("level", levelRef + 1);
+            const level = +window.localStorage.getItem("level");
+            const btnWrapper = document.querySelector(".arcade__btn-wrapper");
+            for (let i = 0; i < levelRef+1; i++) {
+              btnWrapper.children[i].classList.remove("arcade__btn--close");
+            }
+          }
           container.removeEventListener("click", funcGlob.compareCardSingle);
           setTimeout(endGame, 500, 1, container.children.length);
         }
@@ -102,7 +125,9 @@ const gamePlay = (container, playerAmount, gameType) => {
   funcGlob.compareCardMulti = () => {
     if (state.blocked || !event.target.classList.contains("card__back")) return;
     event.target.classList.add("flip");
-    event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
+    event.target.parentNode.nextElementSibling.lastElementChild.classList.add(
+      "choosed"
+    );
     if (state.position === 2) {
       if (state.ref === event.target) return;
       if (state.ref.dataset.id === event.target.dataset.id) {
@@ -122,7 +147,6 @@ const gamePlay = (container, playerAmount, gameType) => {
             );
             for (let i = 0; i < playerAmount; i++) {
               gameCounterRef[i].classList.add("hidden");
-              console.log(gameCounterRef[i]);
             }
           }, 500);
           state.count.map(
@@ -168,7 +192,7 @@ const gamePlay = (container, playerAmount, gameType) => {
       state.position = 2;
     }
   };
-  if (gameType === "singlePlayer")
+  if (gameType === "singlePlayer" || gameType === "arcade")
     container.addEventListener("click", funcGlob.compareCardSingle);
   if (gameType === "multiPlayer") {
     container.addEventListener("click", funcGlob.compareCardMulti);
@@ -185,11 +209,17 @@ export const startGame = (
   containerRef,
   timerCount,
   playerAmount,
-  gameType
+  gameType,
+  currentLevel
 ) => {
+  console.log(currentLevel);
   containerRef.classList.add(`card-container--${cardsAmount}`);
   document.querySelector(".game").classList.remove("hidden-modal");
-  drawCards(cardsAmount, cards, containerRef);
+  if (gameType === "arcade") {
+    drawCards(level[currentLevel - 1].cardsAmount, cards, containerRef);
+  } else {
+    drawCards(cardsAmount, cards, containerRef);
+  }
   const numbersRef = document.querySelector(".game__start-number-wrapper");
   numbersRef.classList.remove("hidden-modal");
   const countdownRef = document.querySelector(".audio__countdown");
@@ -218,17 +248,26 @@ export const startGame = (
 
     for (let i = 0; i < playerAmount; i++) {
       gameCounterRef[i].classList.remove("hidden");
-      console.log(gameCounterRef[i]);
     }
     const timerRef = document.querySelector(".timer");
     const minutesRef = document.querySelector(".timer__minutes");
     const secondsRef = document.querySelector(".timer__seconds");
+    if (gameType === "arcade") {
+      timerRef.classList.remove("hidden-modal");
+      timer(
+        level[currentLevel - 1].time,
+        minutesRef,
+        secondsRef,
+        level[currentLevel - 1].cardsAmount
+      );
+    }
     if (gameType === "singlePlayer") {
       timerRef.classList.remove("hidden-modal");
       timer(timerCount, minutesRef, secondsRef, cardsAmount);
     }
     document.querySelector(".audio__game-play").currentTime = 0;
     document.querySelector(".audio__game-play").play();
+
     gamePlay(containerRef, playerAmount, gameType);
   }, 7400); //7400
 };
