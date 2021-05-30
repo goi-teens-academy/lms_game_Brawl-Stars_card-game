@@ -25,9 +25,10 @@
       <div class="start__controls-wrapper"> <button type="button"
           class="start__author start__open-modal start__controls"> A </bu>
           <button class="start__btn start__open-modal" type="button"> <span class="start__btn-text">play</span>
-          </button> <button type="button" class="start__how-to-play
+
+          </button><button type="button" class="start__how-to-play
             start__open-modal
-            start__controls"> ? </button> </div>
+            start__controls">?</button> </div>
     </section>
     <section class="hidden-modal how-to-play modal">
       <h2 class="how-to-play__headline">How To Play?</h2>
@@ -45,7 +46,7 @@
           "single player" function. You need to choose the number of cards and
           the number of players. Then click "start". You see the cards on the
           screen. You must find two identical cards for the time you have
-          chosen. </p>
+          chosen.</p>
         <div class="how-to-play__photo-wrapper">
           <div></div>
           <div></div>
@@ -111,10 +112,10 @@
           <div class="settings__count-cards">
             <h2 class="settings__headline">Select level</h2>
             <div class="arcade__btn-wrapper settings__wrappers"> <button
-                class="settings__btn arcade__btn settings__btn--choosed" >1</button><button
-                class="settings__btn arcade__btn arcade__btn--close">2</button><button
-                class="settings__btn arcade__btn arcade__btn--close">3</button><button
-                class="settings__btn arcade__btn arcade__btn--close">4</button><button
+                class="settings__btn arcade__btn settings__btn--choosed">1</button>
+              <button class="settings__btn arcade__btn arcade__btn--close">2</button>
+              <button class="settings__btn arcade__btn arcade__btn--close">3</button>
+              <button class="settings__btn arcade__btn arcade__btn--close">4</button><button
                 class="settings__btn arcade__btn arcade__btn--close">5</button><button
                 class="settings__btn arcade__btn arcade__btn--close">6</button><button
                 class="settings__btn arcade__btn arcade__btn--close">7</button><button
@@ -157,17 +158,21 @@
           type="button"> <span class="win__btn-text">Replay</span> </button>
       </div>
       <picture>
-        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png" alt="win-image">
+        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png"
+          alt="win-image">
       </picture>
-    </section><section class="win arcade modal hidden-modal">
+    </section>
+    <section class="win arcade modal hidden-modal">
       <div class="win__content-wrapper">
-        <h2 class="win__headline">You </h2>
-        <button class="win__btn win__open-menu win__open-modal" type="button">
-          <span class="win__btn-text">Next level</span></button><button class="win__btn win__replay win__open-modal"
-          type="button"> <span class="win__btn-text">Replay</span> </button>
+        <h2 class="win__headline win__headline-arcade">You </h2>
+        <button class="win__btn win__open-menu win__open-modal" type="button"> <span class="win__btn-text">Back to
+            menu</span>
+        </button><button class="win__btn win__next-level win__open-modal" type="button">
+          <span class="win__btn-text">Next level</span></button>
       </div>
       <picture>
-        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png" alt="win-image">
+        <source srcset="./img/win@1X.webp" type="image/webp"><img class='win__img' src="./img/win@1X.png"
+          alt="win-image">
       </picture>
     </section>
     <section class="win lose modal hidden-modal">
@@ -178,14 +183,23 @@
           type="button"> <span class="win__btn-text">Replay</span> </button>
       </div>
       <picture>
-        <source srcset="./img/lose@1X.webp" type="image/webp"><img class='win__img' src="./img/lose@1X.png"
-          alt="win-image">
+        <source srcset="./img/lose@1X.webp" type="image/webp">
+        <img class='win__img' src="./img/lose@1X.png" alt="win-image">
       </picture>
+    </section><section class="win win__arcade modal hidden-modal">
+      <div class="win__arcade-wrapper">
+        <button class="win__btn win__btn--arcade win__open-menu win__open-modal" type="button">
+          <span class="win__btn-text">Back to menu</span></button><button class="win__btn win__btn--arcade win__replay win__open-modal"
+          type="button"> <span class="win__btn-text">Replay</span> </button>
+      </div>
     </section>
-  </main> <audio loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio> <audio loop='loop'
-    src="./music/gameplay.mp3" class="audio__game-play"></audio> <audio src="./music/won_sound.mp3"
-    class="audio__won"></audio> <audio src="./music/countdown.mp3" class="audio__countdown"></audio> <audio
-    src="./music/lose_sound.mp3" class="audio__lose"></audio>
+  </main>
+  <audio loop='loop' src="./music/main_theme.mp3" class="audio__main-theme"></audio>
+  <audio loop='loop' src="./music/gameplay.mp3" class="audio__game-play"></audio>
+  <audio src="./music/won_sound.mp3" class="audio__won"></audio>
+  <audio src="./music/countdown.mp3" class="audio__countdown"></audio>
+  <audio src="./music/lose_sound.mp3" class="audio__lose"></audio>
+  <audio src="./music/correct.mp3" class="audio__correct"></audio>
   <script src="./js/script.js" type="module"></script>
 </body>
 

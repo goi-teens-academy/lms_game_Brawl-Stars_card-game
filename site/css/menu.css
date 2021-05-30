@@ -26,7 +26,7 @@
   box-sizing: border-box;
   width: 33.33333%;
   height: 50px;
-  border-bottom: 50px solid rgb(44, 80, 241);
+  border-bottom: 50px solid var(--main-blue);
   opacity: 0.6;
   border-left: 20px solid transparent;
   border-right: 20px solid transparent;
