@@ -52,7 +52,6 @@ const gamePlay = (container, playerAmount, gameType) => {
   const playerMessage = document.querySelector(".game__player-turn");
   // починає гру при сингл плеєрі і аркаді
   const compareCardSingle = () => {
-    console.log(event.target);
     if (
       state.blocked ||
       event.target === container ||
@@ -193,6 +192,5 @@ const timer = (timerCount, minutesRef, secondsRef) => {
     minutesRef.innerHTML = Math.floor(minutes);
     secondsRef.innerHTML = seconds;
     const tester = setTimeout(timer, 1000, timerCount, minutesRef, secondsRef);
-    console.log(tester);
   }
 };

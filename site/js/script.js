@@ -64,7 +64,6 @@ document.querySelector(".arcade__btn-wrapper").addEventListener("click", () => {
    refs.currentLevel = +event.target.textContent;
    event.target.parentNode.querySelector(".settings__btn--choosed").classList.remove("settings__btn--choosed");
    event.target.classList.add("settings__btn--choosed");
-   console.log(refs.currentLevel);
 });
 document.querySelectorAll(".win__open-menu").forEach((btn) => {
    btn.addEventListener("click", () => {

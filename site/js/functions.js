@@ -180,7 +180,6 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
 // розпочинає гру із заданими параметрами
 
 export const startGame = (cardsAmount, cards, containerRef, timerCount, playerAmount, gameType, currentLevel) => {
-   console.log(currentLevel);
    containerRef.classList.add(`card-container--${cardsAmount}`);
    document.querySelector(".game").classList.remove("hidden-modal");
    if (gameType === "arcade") {
@@ -252,7 +251,6 @@ const endGame = (timerCount, cardsAmount, gameType,currentLevel) => {
       gameResult = "";
    } else {
       document.querySelector(".audio__won").play();
-      console.log(currentLevel);
       if (currentLevel === 10) {
          document.querySelector(".win__arcade").classList.remove("hidden-modal");
          return;
