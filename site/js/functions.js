@@ -180,13 +180,11 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
 // розпочинає гру із заданими параметрами
 
 export const startGame = (cardsAmount, cards, containerRef, timerCount, playerAmount, gameType, currentLevel) => {
+   if (gameType === "arcade") cardsAmount = level[currentLevel - 1].cardsAmount;
    containerRef.classList.add(`card-container--${cardsAmount}`);
+   console.log(`card-container--${cardsAmount}`);
    document.querySelector(".game").classList.remove("hidden-modal");
-   if (gameType === "arcade") {
-      drawCards(level[currentLevel - 1].cardsAmount, cards, containerRef);
-   } else {
-      drawCards(cardsAmount, cards, containerRef);
-   }
+   drawCards(cardsAmount, cards, containerRef);
    const numbersRef = document.querySelector(".game__start-number-wrapper");
    numbersRef.classList.remove("hidden-modal");
    const countdownRef = document.querySelector(".audio__countdown");
@@ -238,10 +236,11 @@ export const startGame = (cardsAmount, cards, containerRef, timerCount, playerAm
 };
 
 // закінчує гру
-const endGame = (timerCount, cardsAmount, gameType,currentLevel) => {
+const endGame = (timerCount, cardsAmount, gameType, currentLevel) => {
    const containerRef = document.querySelector(".card-container");
    containerRef.removeEventListener("click", funcGlob.compareCardSingle);
    containerRef.classList.remove(`card-container--${cardsAmount}`);
+   console.log(`card-container--${cardsAmount}`);
    document.querySelector(".game").classList.add("hidden-modal");
    document.querySelector(".audio__game-play").pause();
    document.querySelector(".timer").classList.add("hidden-modal");
@@ -250,12 +249,12 @@ const endGame = (timerCount, cardsAmount, gameType,currentLevel) => {
       document.querySelector(".lose").classList.remove("hidden-modal");
       gameResult = "";
    } else {
+      document.querySelector(".game__congratulation").classList.remove("hidden");
       document.querySelector(".audio__won").play();
       if (currentLevel === 10) {
          document.querySelector(".win__arcade").classList.remove("hidden-modal");
          return;
       }
-      document.querySelector(".game__congratulation").classList.remove("hidden");
       gameType === "arcade" ? document.querySelector(".arcade").classList.remove("hidden-modal") : document.querySelector(".win").classList.remove("hidden-modal");
    }
 };

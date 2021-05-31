@@ -75,7 +75,8 @@ document.querySelectorAll(".win__open-menu").forEach((btn) => {
    });
 });
 document.querySelector(".win__next-level").addEventListener("click", () => {
-   startGame(refs.cardsAmount, cards, refs.containerRef, refs.timerCount, refs.playerAmount, refs.gameType, refs.currentLevel + 1);
+   refs.currentLevel++;
+   startGame(refs.cardsAmount, cards, refs.containerRef, refs.timerCount, refs.playerAmount, refs.gameType, refs.currentLevel);
    document.querySelector(".game__congratulation").classList.add("hidden");
    event.currentTarget.parentNode.parentNode.classList.add("hidden-modal");
 });
