@@ -2,7 +2,7 @@
 .how-to-play {
   background-color: #d8d8d8;
   border: 1px black solid;
-  max-width: 1200px;
+  max-width: 900px;
   /* height: 692px; */
   width: 80vw;
   text-align: center;
@@ -34,12 +34,14 @@
 }
 .how-to-play__img {
   width: 60%;
-  height: 48%;
+  border-radius: 11px;
+  height: 95%;
+  /* height: 48%; */
   border: 1px black solid;
   /* object-fit: cover; */
 }
 .how-to-play__text {
-  font-size: 28px;
+  font-size: 25px;
   margin: 0;
   width: 40%;
 }
