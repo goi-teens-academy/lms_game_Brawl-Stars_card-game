@@ -16,6 +16,8 @@ document.querySelector(".start__btn").addEventListener("click", () => {
 });
 
 document.querySelector(".start__how-to-play").addEventListener("click", () => document.querySelector(".how-to-play").classList.remove("hidden-modal"));
+document.querySelector(".start__author").addEventListener("click", () => document.querySelector(".authors-modal").classList.remove("hidden-modal"));
+
 document.querySelectorAll(".settings__type").forEach((type) => {
    type.addEventListener("click", () => {
       refs.gameType = event.target.dataset.type;
@@ -91,3 +93,7 @@ document.querySelector(".settings__start-btn").addEventListener("click", functio
    startGame(refs.cardsAmount, cards, refs.containerRef, refs.timerCount, refs.playerAmount, refs.gameType, refs.currentLevel);
    refs.settingsRef.classList.add("hidden-modal");
 });
+document.querySelectorAll(".close-modal-btn").forEach(btn => {
+   btn.addEventListener("click", () => {
+   document.getElementById(event.currentTarget.dataset.modal).classList.add("hidden-modal");  
+});});

@@ -49,6 +49,7 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
       count: [0, 0, 0, 0],
    };
    const correctRef = document.querySelector(".audio__correct");
+   const flipRef = document.querySelector(".audio__flip");
    const removeCards = (event) => {
       event.target.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
       state.ref.parentNode.nextElementSibling.lastElementChild.classList.add("scaled");
@@ -73,6 +74,8 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
    funcGlob.compareCardSingle = () => {
       if (state.blocked || !event.target.classList.contains("card__back")) return;
       event.target.classList.add("flip");
+      // flipRef.currentTime = 0;
+      // flipRef.play();
       event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
       if (state.position === 2) {
          if (state.ref === event.target) return;
@@ -115,6 +118,9 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
    funcGlob.compareCardMulti = () => {
       if (state.blocked || !event.target.classList.contains("card__back")) return;
       event.target.classList.add("flip");
+      // flipRef.currentTime = 0;
+      // flipRef.play();
+
       event.target.parentNode.nextElementSibling.lastElementChild.classList.add("choosed");
       if (state.position === 2) {
          if (state.ref === event.target) return;
@@ -229,6 +235,7 @@ export const startGame = (cardsAmount, cards, containerRef, timerCount, playerAm
          timer(timerCount, minutesRef, secondsRef, cardsAmount);
       }
       document.querySelector(".audio__game-play").currentTime = 0;
+      document.querySelector(".audio__game-play").volume = 0.5;
       document.querySelector(".audio__game-play").play();
 
       gamePlay(containerRef, playerAmount, gameType, currentLevel);

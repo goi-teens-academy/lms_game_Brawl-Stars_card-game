@@ -30,9 +30,9 @@
             start__open-modal
             start__controls">?</button> </div>
     </section>
-    <section class="hidden-modal how-to-play modal">
+    <section id="how-to-play" class="how-to-play modal hidden-modal">
       <h2 class="how-to-play__headline">How To Play?</h2>
-      <div class="how-to-play__close">
+      <div data-modal="how-to-play" class="how-to-play__close close-modal-btn">
         <picture>
           <source srcset="./img/Cansel-button@1X.webp" type="image/webp"><img src="./img/Cansel-button@1X.png"
             alt="close_btn" />
@@ -48,11 +48,62 @@
           screen. You must find two identical cards for the time you have
           chosen.</p>
         <div class="how-to-play__photo-wrapper">
-          <div></div>
-          <div></div>
+          <img src="./img/settings.png" alt="how-to-play-img" class="how-to-play__img">
+          <img src="./img/gameplay.png" alt="how-to-play-img" class="how-to-play__img">
         </div>
       </div>
     </section>
+    <section class="modal authors-modal hidden-modal" id="authors">
+
+    <div class="authors_content">
+
+        <div data-modal="authors" class="authors_close close-modal-btn"><img src="./img/Cansel-button@1X.png" alt="#"></div>
+            <h2 class="authors_title">authors of this game</h2>
+              <div class="authors_wrapper">
+                  <div class="authors_card">
+                      <img class="authors_img" src="./img/authors_Bogdan.png" alt="Bogdan">
+                      <h4 class="authors_name">
+                          Bogdanchick
+                      </h4>
+                      <p class="authors_text">
+                          TeamLeak
+                      </p>
+                  </div>
+        
+                  <div class="authors_card">
+                    <img class="authors_img" src="./img/authors_Mari.png" alt="Mari">
+                    <h4 class="authors_name">
+                        Mariia Hrypych
+                    </h4>
+                    <p class="authors_text">
+                        Based in Chicago. I love playing tennis and loud music.
+                    </p>
+                </div>
+        
+                <div class="authors_card">
+                  <img class="authors_img" src="./img/authors_Dmytro.png" alt="Dmytro">
+                  <h4 class="authors_name">
+                      Kolisnyk Dmytro
+                  </h4>
+                  <p class="authors_text">
+                      Based in Chicago. I love playing tennis and loud music.
+                  </p>
+              </div>
+        
+              <div class="authors_card">
+                <img class="authors_img" src="./img/authors_Oksana.png" alt="Oksana">
+                <h4 class="authors_name">
+                    Bradley Hunter
+                </h4>
+                <p class="authors_text">
+                    Based in Chicago. I love playing tennis and loud music.
+                </p>
+            </div>
+        
+          </div>
+    </div>
+    <div class="authors_footer"><a target="_blank" href="https://github.com/DmytroKolisnyk2/Brawl-Stars_card-game"><img class="authors-footer__img" src="./img/logo.ico" alt="logo"></a><p class="authors_footer__text">© 2021 Bravissimo all rights reserved</p></div>
+          </section>
     <section class="settings modal hidden-modal">
       <div class="settings__type-wrapper">
         <div data-type="singlePlayer" class="settings__type
@@ -200,6 +251,8 @@
   <audio src="./music/countdown.mp3" class="audio__countdown"></audio>
   <audio src="./music/lose_sound.mp3" class="audio__lose"></audio>
   <audio src="./music/correct.mp3" class="audio__correct"></audio>
+  <audio src="./music/flip.mp3" class="audio__flip"></audio>
+  
   <script src="./js/script.js" type="module"></script>
 </body>
 
