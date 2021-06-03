@@ -15,8 +15,14 @@ document.querySelector(".start__btn").addEventListener("click", () => {
    document.querySelector(".audio__main-theme").play();
 });
 
-document.querySelector(".start__how-to-play").addEventListener("click", () => document.querySelector(".how-to-play").classList.remove("hidden-modal"));
-document.querySelector(".start__author").addEventListener("click", () => document.querySelector(".authors-modal").classList.remove("hidden-modal"));
+document.querySelector(".start__how-to-play").addEventListener("click", () => {
+   document.querySelector(".how-to-play").classList.remove("hidden-modal");
+   document.querySelector(".audio__main-theme").play();
+});
+document.querySelector(".start__author").addEventListener("click", () => {
+   document.querySelector(".authors-modal").classList.remove("hidden-modal");
+   document.querySelector(".audio__main-theme").play();
+});
 
 document.querySelectorAll(".settings__type").forEach((type) => {
    type.addEventListener("click", () => {
@@ -93,7 +99,8 @@ document.querySelector(".settings__start-btn").addEventListener("click", functio
    startGame(refs.cardsAmount, cards, refs.containerRef, refs.timerCount, refs.playerAmount, refs.gameType, refs.currentLevel);
    refs.settingsRef.classList.add("hidden-modal");
 });
-document.querySelectorAll(".close-modal-btn").forEach(btn => {
+document.querySelectorAll(".close-modal-btn").forEach((btn) => {
    btn.addEventListener("click", () => {
-   document.getElementById(event.currentTarget.dataset.modal).classList.add("hidden-modal");  
-});});
+      document.getElementById(event.currentTarget.dataset.modal).classList.add("hidden-modal");
+   });
+});
