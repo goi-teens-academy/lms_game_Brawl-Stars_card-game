@@ -33,19 +33,21 @@ pipeline {
             }
         }
 
-        stage('Stop and Remove Existing Container on Remote Server') {
+        stage('Force Stop and Remove Existing Container on Remote Server') {
             steps {
                 script {
                     sh """
                     ssh root@${SERVER_IP} '
-                        if [ \$(docker ps -q --filter "name=${DOCKER_CONTAINER_NAME}") ]; then
-                            docker stop ${DOCKER_CONTAINER_NAME} || true
-                            docker rm -f ${DOCKER_CONTAINER_NAME} || true
+                        CONTAINER_ID=\$(docker ps -aq --filter "name=${DOCKER_CONTAINER_NAME}")
+                        if [ "\$CONTAINER_ID" ]; then
+                            docker stop \$CONTAINER_ID || true
+                            docker rm -f \$CONTAINER_ID || true
                         fi
 
                         # Ensure the port is freed
-                        if lsof -ti:9000; then
-                            kill -9 \$(lsof -ti:9000) || true
+                        PORT_PID=\$(lsof -ti:9000)
+                        if [ "\$PORT_PID" ]; then
+                            kill -9 \$PORT_PID || true
                         fi
                     '
                     """
