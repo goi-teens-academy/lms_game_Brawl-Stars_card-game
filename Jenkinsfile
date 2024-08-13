@@ -49,6 +49,12 @@ pipeline {
                         if [ "\$PORT_PID" ]; then
                             kill -9 \$PORT_PID || true
                         fi
+
+                        # Double-check to ensure the port is free
+                        while lsof -ti:9000; do
+                            echo "Waiting for port 9000 to be free..."
+                            sleep 1
+                        done
                     '
                     """
                 }
