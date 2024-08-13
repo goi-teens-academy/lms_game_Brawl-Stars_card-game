@@ -41,16 +41,20 @@ pipeline {
                         # Stop and remove the existing container if it's running
                         CONTAINER_ID=\$(docker ps -aq --filter "name=${DOCKER_CONTAINER_NAME}")
                         if [ "\$CONTAINER_ID" ]; then
-                            echo "Stopping and removing existing container..."
+                            echo "Found container with ID: \$CONTAINER_ID"
                             docker stop \$CONTAINER_ID || true
                             docker rm -f \$CONTAINER_ID || true
+                        else
+                            echo "No container found with name ${DOCKER_CONTAINER_NAME}"
                         fi
 
                         # Ensure the port is freed
                         PORT_PID=\$(lsof -ti:9000)
                         if [ "\$PORT_PID" ]; then
-                            echo "Killing process using port 9000..."
+                            echo "Killing process using port 9000 with PID: \$PORT_PID"
                             kill -9 \$PORT_PID || true
+                        else
+                            echo "No process found using port 9000"
                         fi
 
                         # Double-check to ensure the port is free
