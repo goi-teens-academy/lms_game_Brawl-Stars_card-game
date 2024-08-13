@@ -38,14 +38,15 @@ pipeline {
                 script {
                     sh """
                     ssh root@${SERVER_IP} '
-                        # Stop and remove the existing container if it's running
-                        CONTAINER_ID=\$(docker ps -aq --filter "name=${DOCKER_CONTAINER_NAME}")
-                        if [ "\$CONTAINER_ID" ]; then
+                        set -e
+                        # Explicitly check for container by exact name
+                        CONTAINER_ID=\$(docker ps -a --filter "name=^/${DOCKER_CONTAINER_NAME}$" --format "{{.ID}}")
+                        if [ -n "\$CONTAINER_ID" ]; then
                             echo "Found container with ID: \$CONTAINER_ID"
                             docker stop \$CONTAINER_ID
                             docker rm -f \$CONTAINER_ID
                         else
-                            echo "No container found with name ${DOCKER_CONTAINER_NAME}"
+                            echo "No container found with exact name ${DOCKER_CONTAINER_NAME}. Proceeding..."
                         fi
 
                         # Ensure the port is freed
