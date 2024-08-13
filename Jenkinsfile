@@ -42,8 +42,8 @@ pipeline {
                         CONTAINER_ID=\$(docker ps -aq --filter "name=${DOCKER_CONTAINER_NAME}")
                         if [ "\$CONTAINER_ID" ]; then
                             echo "Found container with ID: \$CONTAINER_ID"
-                            docker stop \$CONTAINER_ID || true
-                            docker rm -f \$CONTAINER_ID || true
+                            docker stop \$CONTAINER_ID
+                            docker rm -f \$CONTAINER_ID
                         else
                             echo "No container found with name ${DOCKER_CONTAINER_NAME}"
                         fi
@@ -52,7 +52,7 @@ pipeline {
                         PORT_PID=\$(lsof -ti:9000)
                         if [ "\$PORT_PID" ]; then
                             echo "Killing process using port 9000 with PID: \$PORT_PID"
-                            kill -9 \$PORT_PID || true
+                            kill -9 \$PORT_PID
                         else
                             echo "No process found using port 9000"
                         fi
