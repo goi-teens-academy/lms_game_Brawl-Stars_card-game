@@ -181,6 +181,8 @@ const gamePlay = (container, playerAmount, gameType, currentLevel) => {
       playerCount[state.move].classList.add("game__player-counter--current");
       playerCount.forEach((count) => (count.textContent = 0));
    }
+
+   top.postMessage('brawlStarsGame/gamePlay', '*');
 };
 
 // розпочинає гру із заданими параметрами
@@ -239,6 +241,8 @@ export const startGame = (cardsAmount, cards, containerRef, timerCount, playerAm
       document.querySelector(".audio__game-play").play();
 
       gamePlay(containerRef, playerAmount, gameType, currentLevel);
+
+      top.postMessage('brawlStarsGame/startGame', '*');
    }, 5400); //7400
 };
 
@@ -264,6 +268,8 @@ const endGame = (timerCount, cardsAmount, gameType, currentLevel) => {
       }
       gameType === "arcade" ? document.querySelector(".arcade").classList.remove("hidden-modal") : document.querySelector(".win").classList.remove("hidden-modal");
    }
+
+   top.postMessage('brawlStarsGame/endGame', '*');
 };
 // таймер (кількість часу, посилання на хилини, секунди)
 const timer = (timerCount, minutesRef, secondsRef, cardsAmount) => {
