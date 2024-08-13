@@ -42,6 +42,11 @@ pipeline {
                             docker stop ${DOCKER_CONTAINER_NAME}
                             docker rm ${DOCKER_CONTAINER_NAME}
                         fi
+
+                        # Ensure the port is freed
+                        if [ \$(lsof -ti:9000) ]; then
+                            kill -9 \$(lsof -ti:9000)
+                        fi
                     '
                     """
                 }
