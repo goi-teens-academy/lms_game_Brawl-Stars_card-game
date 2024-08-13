@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = "brawl_stars_card_game"
-        DOCKER_CONTAINER_NAME = "brawl_stars_card_game_container"
+        DOCKER_CONTAINER_NAME = "nifty_archimedes"
         DOCKER_PORT_MAPPING = "9000:9000"
         SERVER_IP = "80.211.249.97"
         APP_DIR = "/root/lms_game_Brawl-Stars_card-game"
@@ -33,13 +33,15 @@ pipeline {
             }
         }
 
-        stage('Force Stop and Remove Existing Container on Remote Server') {
+        stage('Stop and Remove Existing Container on Remote Server') {
             steps {
                 script {
                     sh """
                     ssh root@${SERVER_IP} '
+                        # Stop and remove the existing container if it's running
                         CONTAINER_ID=\$(docker ps -aq --filter "name=${DOCKER_CONTAINER_NAME}")
                         if [ "\$CONTAINER_ID" ]; then
+                            echo "Stopping and removing existing container..."
                             docker stop \$CONTAINER_ID || true
                             docker rm -f \$CONTAINER_ID || true
                         fi
@@ -47,6 +49,7 @@ pipeline {
                         # Ensure the port is freed
                         PORT_PID=\$(lsof -ti:9000)
                         if [ "\$PORT_PID" ]; then
+                            echo "Killing process using port 9000..."
                             kill -9 \$PORT_PID || true
                         fi
 
