@@ -20,14 +20,6 @@ pipeline {
             }
         }
 
-        stage('Verify GitHub Pull') {
-            steps {
-                script {
-                    sh "git log -1 --pretty=%B"
-                }
-            }
-        }
-
         stage('Build Docker Image on Remote Server') {
             steps {
                 script {
@@ -47,13 +39,13 @@ pipeline {
                     sh """
                     ssh root@${SERVER_IP} '
                         if [ \$(docker ps -q --filter "name=${DOCKER_CONTAINER_NAME}") ]; then
-                            docker stop ${DOCKER_CONTAINER_NAME}
-                            docker rm ${DOCKER_CONTAINER_NAME}
+                            docker stop ${DOCKER_CONTAINER_NAME} || true
+                            docker rm -f ${DOCKER_CONTAINER_NAME} || true
                         fi
 
                         # Ensure the port is freed
                         if lsof -ti:9000; then
-                            kill -9 \$(lsof -ti:9000)
+                            kill -9 \$(lsof -ti:9000) || true
                         fi
                     '
                     """
