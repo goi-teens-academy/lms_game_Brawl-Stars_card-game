@@ -51,8 +51,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker stack deploy -c brawl-docker-compose.yml brawl-game
-                    docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
+                    TAG=${env.IMAGE_TAG} docker stack deploy -c brawl-docker-compose.yml brawl-game
                     """
                 }
             }
