@@ -24,9 +24,9 @@ pipeline {
                         string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
                         string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
                     ]) {
-                        env.SSH_KEY_PATH = SSH_KEY_PATH
                         env.dockerUsername = dockerUsername
                         env.dockerAccessToken = dockerAccessToken
+                        env.SSH_KEY_PATH = SSH_KEY_PATH
                     }
                 }
             }
@@ -54,7 +54,6 @@ pipeline {
             steps {
                 script {
                     sh "docker save -o ${env.IMAGE_FILE} ${env.IMAGE_NAME}"
-
                     sh """
                     scp -i ${env.SSH_KEY_PATH} ${env.IMAGE_FILE} root@${env.NODE_IP}:/tmp/
                     ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'
@@ -69,7 +68,6 @@ pipeline {
                     sh """
                     ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'test -f ${DOCKER_COMPOSE_FILE} || echo "File not found: ${DOCKER_COMPOSE_FILE}" && exit 1'
                     """
-
                     sh """
                     ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}'
                     """
