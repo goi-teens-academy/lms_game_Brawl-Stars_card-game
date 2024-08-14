@@ -17,9 +17,14 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'ssh_key', variable: 'SSH_KEY')
+                        string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
+                        string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken'),
+                        string(credentialsId: 'pasha-goitacad-ssh', variable: 'GIT_SSH_KEY')
                     ]) {
-                        env.SSH_KEY = SSH_KEY
+                        env.dockerUsername = dockerUsername
+                        env.dockerAccessToken = dockerAccessToken
+                        env.GIT_SSH_KEY = GIT_SSH_KEY
+                        env.dockerImageName = 'dockergointeens/frontend-games'
                     }
                 }
             }
@@ -27,7 +32,9 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'git@github.com:goi-teens-academy/lms_game_Brawl-Stars_card-game.git'
+                script {
+                    git branch: 'master', credentialsId: 'pasha-goitacad-ssh', url: 'git@github.com:goi-teens-academy/lms_game_Brawl-Stars_card-game.git'
+                }
             }
         }
 
@@ -35,10 +42,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
-                        cd /root/lms_game_Brawl-Stars_card-game &&
-                        docker build -t brawl-game:latest .
-                    '
+                    docker build -t ${env.dockerImageName}:${env.dockerImageLabel} -t ${env.dockerImageName}:latest .
                     """
                 }
             }
@@ -48,9 +52,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
-                        docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}
-                    '
+                    docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}
                     """
                 }
             }
@@ -59,11 +61,7 @@ pipeline {
         stage('Clean Up Docker Images on Target Node') {
             steps {
                 script {
-                    sh """
-                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
-                        docker image prune -f
-                    '
-                    """
+                    sh "docker image prune -f"
                 }
             }
         }
