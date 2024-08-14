@@ -52,13 +52,15 @@ pipeline {
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
+                    def dateTag = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
                     sh """
                     docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth
-                    docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
+                    docker service update --image brawl-game:${dateTag} brawl-game_brawl-game --force
                     """
                 }
             }
         }
+
 
         stage('Clean Up Docker Images') {
             steps {
