@@ -65,7 +65,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    ssh -i ${env.SSH_KEY_PATH} root@${env.REMOTE_NODE_IP} docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
+                    docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
                     """
                 }
             }
