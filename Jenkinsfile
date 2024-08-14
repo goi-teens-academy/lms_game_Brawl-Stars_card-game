@@ -12,6 +12,7 @@ pipeline {
         STACK_NAME = "brawl-game"
         IMAGE_NAME = "dockergointeens/frontend-games:latest"
         IMAGE_FILE = "/tmp/brawl-game-latest.tar"
+        NODE_IP = "80.211.249.97"
     }
 
     stages {
@@ -19,13 +20,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        sshUserPrivateKey(credentialsId: 'pasha-goitacad-ssh', keyFileVariable: 'GIT_SSH_KEY'),
+                        sshUserPrivateKey(credentialsId: 'automation_ssh_key_devops', keyFileVariable: 'SSH_KEY_PATH'),
                         string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
                         string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
                     ]) {
                         env.dockerUsername = dockerUsername
                         env.dockerAccessToken = dockerAccessToken
-                        env.GIT_SSH_KEY = GIT_SSH_KEY
                     }
                 }
             }
@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image on Target Node') {
+        stage('Build Docker Image') {
             steps {
                 script {
                     sh """
@@ -52,17 +52,12 @@ pipeline {
         stage('Save and Distribute Image') {
             steps {
                 script {
-                    // Save the Docker image
                     sh "docker save -o ${env.IMAGE_FILE} ${env.IMAGE_NAME}"
 
-                    // Load the image on other nodes
-                    def nodes = ["node1_ip", "node2_ip", "node3_ip"]  // replace with actual node IPs
-                    for (node in nodes) {
-                        sh """
-                        scp -i ${env.GIT_SSH_KEY} ${env.IMAGE_FILE} root@${node}:/tmp/
-                        ssh -i ${env.GIT_SSH_KEY} root@${node} 'docker load -i /tmp/brawl-game-latest.tar'
-                        """
-                    }
+                    sh """
+                    scp -i ${env.SSH_KEY_PATH} ${env.IMAGE_FILE} root@${env.NODE_IP}:/tmp/
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'
+                    """
                 }
             }
         }
@@ -71,16 +66,18 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}'
                     """
                 }
             }
         }
 
-        stage('Clean Up Docker Images on Target Node') {
+        stage('Clean Up Docker Images on Node') {
             steps {
                 script {
-                    sh "docker image prune -f"
+                    sh """
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker image prune -f'
+                    """
                 }
             }
         }
