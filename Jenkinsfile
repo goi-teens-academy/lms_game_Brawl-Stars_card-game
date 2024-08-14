@@ -17,9 +17,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([
+                        sshUserPrivateKey(credentialsId: 'pasha-goitacad-ssh', keyFileVariable: 'GIT_SSH_KEY'),
                         string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
-                        string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken'),
-                        string(credentialsId: 'pasha-goitacad-ssh', variable: 'GIT_SSH_KEY')
+                        string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
                     ]) {
                         env.dockerUsername = dockerUsername
                         env.dockerAccessToken = dockerAccessToken
