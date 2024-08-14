@@ -24,6 +24,7 @@ pipeline {
                         string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
                         string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
                     ]) {
+                        env.SSH_KEY_PATH = SSH_KEY_PATH
                         env.dockerUsername = dockerUsername
                         env.dockerAccessToken = dockerAccessToken
                     }
@@ -52,13 +53,11 @@ pipeline {
         stage('Save and Distribute Image') {
             steps {
                 script {
-                    // Save the Docker image
                     sh "docker save -o ${env.IMAGE_FILE} ${env.IMAGE_NAME}"
 
-                    // Load the image on the node
                     sh """
-                    scp -i ${SSH_KEY_PATH} ${env.IMAGE_FILE} root@${env.NODE_IP}:/tmp/
-                    ssh -i ${SSH_KEY_PATH} root@${env.NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'
+                    scp -i ${env.SSH_KEY_PATH} ${env.IMAGE_FILE} root@${env.NODE_IP}:/tmp/
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'
                     """
                 }
             }
@@ -67,14 +66,12 @@ pipeline {
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
-                    // Make sure the brawl-docker-compose.yml file exists on the target server
                     sh """
-                    ssh -i ${SSH_KEY_PATH} root@${env.NODE_IP} 'test -f ${DOCKER_COMPOSE_FILE} || echo "File not found: ${DOCKER_COMPOSE_FILE}" && exit 1'
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'test -f ${DOCKER_COMPOSE_FILE} || echo "File not found: ${DOCKER_COMPOSE_FILE}" && exit 1'
                     """
 
-                    // Deploy the stack using Docker Swarm
                     sh """
-                    ssh -i ${SSH_KEY_PATH} root@${env.NODE_IP} 'docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}'
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}'
                     """
                 }
             }
@@ -84,7 +81,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    ssh -i ${SSH_KEY_PATH} root@${env.NODE_IP} 'docker image prune -f'
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker image prune -f'
                     """
                 }
             }
