@@ -8,11 +8,9 @@ pipeline {
     }
 
     environment {
-        DOCKER_COMPOSE_FILE = "/root/brawl-docker-compose.yml"
-        STACK_NAME = "brawl-game"
         IMAGE_NAME = "dockergointeens/frontend-games:latest"
         IMAGE_FILE = "/tmp/brawl-game-latest.tar"
-        NODE_IP = "80.211.249.97"
+        REMOTE_NODE_IP = "80.211.249.97"
     }
 
     stages {
@@ -26,7 +24,7 @@ pipeline {
                     ]) {
                         env.dockerUsername = dockerUsername
                         env.dockerAccessToken = dockerAccessToken
-                        env.SSH_KEY_PATH = SSH_KEY_PATH
+                        env.SSH_KEY_PATH = "${SSH_KEY_PATH}"
                     }
                 }
             }
@@ -43,21 +41,19 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh """
-                    docker build -t ${env.IMAGE_NAME} .
-                    """
+                    sh "docker build -t ${env.IMAGE_NAME} ."
                 }
             }
         }
 
-        stage('Save and Distribute Image') {
+        stage('Save and Transfer Docker Image') {
             steps {
                 script {
                     sh "docker save -o ${env.IMAGE_FILE} ${env.IMAGE_NAME}"
-                    sh """
-                    scp -i ${env.SSH_KEY_PATH} ${env.IMAGE_FILE} root@${env.NODE_IP}:/tmp/
-                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'
-                    """
+
+                    sh "scp -i \"${env.SSH_KEY_PATH}\" ${env.IMAGE_FILE} root@${env.REMOTE_NODE_IP}:/tmp/"
+
+                    sh "ssh -i \"${env.SSH_KEY_PATH}\" root@${env.REMOTE_NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'"
                 }
             }
         }
@@ -65,22 +61,15 @@ pipeline {
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
-                    sh """
-                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'test -f ${DOCKER_COMPOSE_FILE} || echo "File not found: ${DOCKER_COMPOSE_FILE}" && exit 1'
-                    """
-                    sh """
-                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}'
-                    """
+                    sh "docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth"
                 }
             }
         }
 
-        stage('Clean Up Docker Images on Node') {
+        stage('Clean Up Docker Images') {
             steps {
                 script {
-                    sh """
-                    ssh -i ${env.SSH_KEY_PATH} root@${env.NODE_IP} 'docker image prune -f'
-                    """
+                    sh "docker image prune -f"
                 }
             }
         }
