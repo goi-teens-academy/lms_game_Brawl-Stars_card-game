@@ -4,9 +4,7 @@ services:
   brawl-game:
     image: brawl-game:latest
     ports:
-      - target: 9000
-        published: 9000
-        mode: host
+       - "9000:9000"
     deploy:
       mode: replicated
       replicas: 1

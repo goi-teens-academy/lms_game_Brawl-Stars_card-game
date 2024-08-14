@@ -8,7 +8,7 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "dockergointeens/frontend-games:latest"
+        IMAGE_NAME = "brawl-game:latest"
         IMAGE_FILE = "/tmp/brawl-game-latest.tar"
         REMOTE_NODE_IP = "80.211.249.97"
     }
@@ -41,7 +41,9 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${env.IMAGE_NAME} ."
+                    sh """
+                    docker build -t brawl-game:latest .
+                    """
                 }
             }
         }
@@ -49,7 +51,7 @@ pipeline {
         stage('Save and Transfer Docker Image') {
             steps {
                 script {
-                    sh "docker save -o ${env.IMAGE_FILE} ${env.IMAGE_NAME}"
+                    sh "docker save -o ${env.IMAGE_FILE} brawl-game:latest"
 
                     sh "scp -i \"${env.SSH_KEY_PATH}\" ${env.IMAGE_FILE} root@${env.REMOTE_NODE_IP}:/tmp/"
 
@@ -58,10 +60,13 @@ pipeline {
             }
         }
 
+
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
-                    sh "docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth"
+                    sh """
+                    docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth
+                    """
                 }
             }
         }
