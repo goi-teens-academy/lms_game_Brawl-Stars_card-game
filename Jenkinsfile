@@ -41,7 +41,6 @@ pipeline {
         stage('Build and Tag Docker Image') {
             steps {
                 script {
-                    // Build and tag the image locally
                     sh """
                     docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .
                     """
@@ -52,13 +51,14 @@ pipeline {
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
-                    // Deploy the stack using Docker Swarm from the Jenkins worker
                     sh """
                     docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth
+                    docker service update --image brawl-game:latest brawl-game_brawl-game --force
                     """
                 }
             }
         }
+
 
         stage('Clean Up Docker Images') {
             steps {
