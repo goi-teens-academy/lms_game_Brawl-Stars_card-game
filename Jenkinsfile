@@ -1,3 +1,5 @@
+@Library('jenkins-common')_
+
 pipeline {
     agent {
         node {
@@ -47,11 +49,23 @@ pipeline {
             }
         }
 
+        stage('Save and Transfer Docker Image') {
+            steps {
+                script {
+                    sh """
+                    docker save -o /tmp/${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar ${env.IMAGE_NAME}:${env.IMAGE_TAG}
+                    scp -i ${env.SSH_KEY_PATH} /tmp/${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar root@${env.REMOTE_NODE_IP}:/tmp/
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.REMOTE_NODE_IP} docker load -i /tmp/${env.IMAGE_NAME}-${env.IMAGE_TAG}.tar
+                    """
+                }
+            }
+        }
+
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
                     sh """
-                    TAG=${env.IMAGE_TAG} docker stack deploy -c brawl-docker-compose.yml brawl-game
+                    ssh -i ${env.SSH_KEY_PATH} root@${env.REMOTE_NODE_IP} docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
                     """
                 }
             }
