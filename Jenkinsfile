@@ -1,3 +1,5 @@
+@Library('jenkins-common')_
+
 pipeline {
     agent {
         node {
@@ -6,57 +8,70 @@ pipeline {
     }
 
     environment {
-        SERVER_IP = "80.211.249.97"
-        SCRIPT_PATH = "/tmp/deploy_container.sh"
+        DOCKER_COMPOSE_FILE = "/root/brawl-docker-compose.yml"
+        STACK_NAME = "brawl-game"
     }
 
     stages {
+        stage('Load Credentials') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
+                    string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
+                ]) {
+                    env.dockerUsername = dockerUsername
+                    env.dockerAccessToken = dockerAccessToken
+                    env.dockerImageName = 'dockergointeens/frontend-games'
+                }
+            }
+        }
+
         stage('Clone Repository') {
             steps {
                 git 'git@github.com:goi-teens-academy/lms_game_Brawl-Stars_card-game.git'
             }
         }
 
-        stage('Build Docker Image on Remote Server') {
+        stage('Build Docker Image') {
+            steps {
+                script {
+                    def githubBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
+                    def githubCommitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
+                    def currentDateTime = sh(script: 'date +"%Y-%m-%dT%H-%M-%S"', returnStdout: true).trim()
+                    def dockerImageLabel = "${githubBranch}-${githubCommitHash}-${currentDateTime}".replace('\n', '').replace('\r', '')
+
+                    env.dockerImageLabel = dockerImageLabel
+                    env.dockerImageReadableLabel = githubBranch.equals('master') ? 'latest' : 'prod'
+
+                    sh "docker build -t ${env.dockerImageName}:${dockerImageLabel} -t ${env.dockerImageName}:${dockerImageReadableLabel} ."
+                }
+            }
+        }
+
+        stage('Push Docker Image to Docker Hub') {
+            steps {
+                script {
+                    sh "echo ${dockerAccessToken} | docker login --username ${dockerUsername} --password-stdin"
+                    sh "docker push ${env.dockerImageName}:${dockerImageLabel}"
+                    sh "docker push ${env.dockerImageName}:${dockerImageReadableLabel}"
+                }
+            }
+        }
+
+        stage('Deploy via Docker Swarm') {
             steps {
                 script {
                     sh """
-                    ssh root@${SERVER_IP} '
-                        cd /root/lms_game_Brawl-Stars_card-game &&
-                        docker build -t brawl_stars_card_game .
-                    '
+                    docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME} --with-registry-auth
                     """
                 }
             }
         }
 
-        stage('Upload and Set Permissions for Script') {
+        stage('Clean Up Docker Images') {
             steps {
                 script {
-                    sh """
-                    scp deploy_container.sh root@${SERVER_IP}:${SCRIPT_PATH}
-                    ssh root@${SERVER_IP} 'chmod +x ${SCRIPT_PATH}'
-                    """
-                }
-            }
-        }
-
-        stage('Execute Deployment Script on Remote Server') {
-            steps {
-                script {
-                    sh """
-                    ssh root@${SERVER_IP} '${SCRIPT_PATH}'
-                    """
-                }
-            }
-        }
-
-        stage('Clean Up') {
-            steps {
-                script {
-                    sh """
-                    ssh root@${SERVER_IP} 'rm -f ${SCRIPT_PATH}'
-                    """
+                    sh "docker image prune -f"
                 }
             }
         }
@@ -64,9 +79,7 @@ pipeline {
 
     post {
         always {
-            script {
-                sh "ssh root@${SERVER_IP} 'docker image prune -f'"
-            }
+            cleanWs()
         }
     }
 }
