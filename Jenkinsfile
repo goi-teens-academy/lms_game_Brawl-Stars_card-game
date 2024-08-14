@@ -8,8 +8,8 @@ pipeline {
     }
 
     environment {
-        IMAGE_NAME = "brawl-game:latest"
-        IMAGE_FILE = "/tmp/brawl-game-latest.tar"
+        IMAGE_NAME = "brawl-game"
+        IMAGE_TAG = "latest"
         REMOTE_NODE_IP = "80.211.249.97"
     }
 
@@ -38,32 +38,21 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build and Tag Docker Image') {
             steps {
                 script {
+                    // Build and tag the image locally
                     sh """
-                    docker build -t brawl-game:latest .
+                    docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .
                     """
                 }
             }
         }
 
-        stage('Save and Transfer Docker Image') {
-            steps {
-                script {
-                    sh "docker save -o ${env.IMAGE_FILE} brawl-game:latest"
-
-                    sh "scp -i \"${env.SSH_KEY_PATH}\" ${env.IMAGE_FILE} root@${env.REMOTE_NODE_IP}:/tmp/"
-
-                    sh "ssh -i \"${env.SSH_KEY_PATH}\" root@${env.REMOTE_NODE_IP} 'docker load -i /tmp/brawl-game-latest.tar'"
-                }
-            }
-        }
-
-
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
+                    // Deploy the stack using Docker Swarm from the Jenkins worker
                     sh """
                     docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth
                     """
