@@ -106,11 +106,9 @@ pipeline {
         always {
             script {
                 cleanWs()
-                if (env.sendFailureNotification == 'true') {
-                    sendTelegramChannelMessage(env.telegramNotifyChannelBotApiToken, env.telegramNotifyChannelChatId, env.failedBuildText)
-                } else {
-                    sendTelegramChannelMessage(env.telegramNotifyChannelBotApiToken, env.telegramNotifyChannelChatId, env.successBuildText)
-                }
+                def success = 'SUCCESS'.equals(currentBuild.currentResult)
+                def messageToSend = success ? env.successBuildText : env.failedBuildText
+                sendTelegramChannelMessage(env.telegramNotifyChannelBotApiToken, env.telegramNotifyChannelChatId, messageToSend)
             }
         }
     }
