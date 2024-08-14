@@ -9,7 +9,6 @@ pipeline {
 
     environment {
         IMAGE_NAME = "brawl-game"
-        IMAGE_TAG = "latest"
         REMOTE_NODE_IP = "80.211.249.97"
     }
 
@@ -41,8 +40,10 @@ pipeline {
         stage('Build and Tag Docker Image') {
             steps {
                 script {
+                    def dateTag = new Date().format("yyyyMMdd-HHmmss", TimeZone.getTimeZone('UTC'))
+                    env.IMAGE_TAG = dateTag
                     sh """
-                    docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} .
+                    docker build -t ${env.IMAGE_NAME}:${env.IMAGE_TAG} -t ${env.IMAGE_NAME}:latest .
                     """
                 }
             }
@@ -53,12 +54,11 @@ pipeline {
                 script {
                     sh """
                     docker stack deploy -c brawl-docker-compose.yml brawl-game --with-registry-auth
-                    docker service update --image brawl-game:latest brawl-game_brawl-game --force
+                    docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
                     """
                 }
             }
         }
-
 
         stage('Clean Up Docker Images') {
             steps {
