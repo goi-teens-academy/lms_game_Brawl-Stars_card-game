@@ -10,7 +10,6 @@ pipeline {
     environment {
         IMAGE_NAME = "brawl-game"
         REMOTE_NODE_IP = "80.211.249.97"
-        sendFailureNotification = false
     }
 
     stages {
@@ -81,14 +80,9 @@ pipeline {
         stage('Deploy via Docker Swarm') {
             steps {
                 script {
-                    try {
-                        sh """
-                        ssh -i ${env.SSH_KEY_PATH} root@${env.REMOTE_NODE_IP} docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
-                        """
-                    } catch (Exception e) {
-                        env.sendFailureNotification = true
-                        throw e
-                    }
+                    sh """
+                    docker service update --image ${env.IMAGE_NAME}:${env.IMAGE_TAG} brawl-game_brawl-game --force
+                    """
                 }
             }
         }
