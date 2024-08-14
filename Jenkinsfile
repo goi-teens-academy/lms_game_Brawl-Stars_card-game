@@ -15,13 +15,15 @@ pipeline {
     stages {
         stage('Load Credentials') {
             steps {
-                withCredentials([
-                    string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
-                    string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
-                ]) {
-                    env.dockerUsername = dockerUsername
-                    env.dockerAccessToken = dockerAccessToken
-                    env.dockerImageName = 'dockergointeens/frontend-games'
+                script {
+                    withCredentials([
+                        string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
+                        string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
+                    ]) {
+                        env.dockerUsername = dockerUsername
+                        env.dockerAccessToken = dockerAccessToken
+                        env.dockerImageName = 'dockergointeens/frontend-games'
+                    }
                 }
             }
         }
@@ -51,9 +53,9 @@ pipeline {
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
-                    sh "echo ${dockerAccessToken} | docker login --username ${dockerUsername} --password-stdin"
-                    sh "docker push ${env.dockerImageName}:${dockerImageLabel}"
-                    sh "docker push ${env.dockerImageName}:${dockerImageReadableLabel}"
+                    sh "echo ${env.dockerAccessToken} | docker login --username ${env.dockerUsername} --password-stdin"
+                    sh "docker push ${env.dockerImageName}:${env.dockerImageLabel}"
+                    sh "docker push ${env.dockerImageName}:${env.dockerImageReadableLabel}"
                 }
             }
         }
@@ -62,7 +64,7 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME} --with-registry-auth
+                    docker stack deploy -c ${env.DOCKER_COMPOSE_FILE} ${env.STACK_NAME} --with-registry-auth
                     """
                 }
             }
