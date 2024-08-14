@@ -2,7 +2,7 @@ version: '3.9'
 
 services:
   brawl-game:
-    image: dockergointeens/frontend-games:latest
+    image: brawl-game:latest
     ports:
       - target: 9000
         published: 9000

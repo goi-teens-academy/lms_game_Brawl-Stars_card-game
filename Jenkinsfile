@@ -17,12 +17,9 @@ pipeline {
             steps {
                 script {
                     withCredentials([
-                        string(credentialsId: 'docker_user_teens', variable: 'dockerUsername'),
-                        string(credentialsId: 'docker_access_token_teens', variable: 'dockerAccessToken')
+                        string(credentialsId: 'ssh_key', variable: 'SSH_KEY')
                     ]) {
-                        env.dockerUsername = dockerUsername
-                        env.dockerAccessToken = dockerAccessToken
-                        env.dockerImageName = 'dockergointeens/frontend-games'
+                        env.SSH_KEY = SSH_KEY
                     }
                 }
             }
@@ -34,28 +31,15 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build Docker Image on Target Node') {
             steps {
                 script {
-                    def githubBranch = sh(script: "git rev-parse --abbrev-ref HEAD", returnStdout: true).trim()
-                    def githubCommitHash = sh(script: "git rev-parse --short HEAD", returnStdout: true).trim()
-                    def currentDateTime = sh(script: 'date +"%Y-%m-%dT%H-%M-%S"', returnStdout: true).trim()
-                    def dockerImageLabel = "${githubBranch}-${githubCommitHash}-${currentDateTime}".replace('\n', '').replace('\r', '')
-
-                    env.dockerImageLabel = dockerImageLabel
-                    env.dockerImageReadableLabel = githubBranch.equals('master') ? 'latest' : 'prod'
-
-                    sh "docker build -t ${env.dockerImageName}:${dockerImageLabel} -t ${env.dockerImageName}:${dockerImageReadableLabel} ."
-                }
-            }
-        }
-
-        stage('Push Docker Image to Docker Hub') {
-            steps {
-                script {
-                    sh "echo ${env.dockerAccessToken} | docker login --username ${env.dockerUsername} --password-stdin"
-                    sh "docker push ${env.dockerImageName}:${env.dockerImageLabel}"
-                    sh "docker push ${env.dockerImageName}:${env.dockerImageReadableLabel}"
+                    sh """
+                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
+                        cd /root/lms_game_Brawl-Stars_card-game &&
+                        docker build -t brawl-game:latest .
+                    '
+                    """
                 }
             }
         }
@@ -64,16 +48,22 @@ pipeline {
             steps {
                 script {
                     sh """
-                    docker stack deploy -c ${env.DOCKER_COMPOSE_FILE} ${env.STACK_NAME} --with-registry-auth
+                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
+                        docker stack deploy -c ${DOCKER_COMPOSE_FILE} ${STACK_NAME}
+                    '
                     """
                 }
             }
         }
 
-        stage('Clean Up Docker Images') {
+        stage('Clean Up Docker Images on Target Node') {
             steps {
                 script {
-                    sh "docker image prune -f"
+                    sh """
+                    ssh -i ${env.SSH_KEY} root@${SERVER_IP} '
+                        docker image prune -f
+                    '
+                    """
                 }
             }
         }
